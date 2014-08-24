@@ -22,41 +22,40 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 package jm.audio.synth;
 
 
-import jm.music.data.Note;
-import jm.audio.AudioObject;
-import jm.audio.Instrument;
 import jm.audio.AOException;
+import jm.audio.AudioObject;
+
 /**
  * The Wavelet Transform
+ *
  * @author Timothy Opie
  * @version 1.0, Thursday October 23, 2003
- * Last changed:
+ *          Last changed:
  */
 
-public final class Wavelet extends AudioObject{
-	//----------------------------------------------
-	// Attributes 
-	//----------------------------------------------
+public final class Wavelet extends AudioObject {
+    //----------------------------------------------
+    // Attributes
+    //----------------------------------------------
 
 
+    //----------------------------------------------
+    // Constructors
+    //----------------------------------------------
+    public Wavelet(AudioObject ao) {
+        super(ao, "[FGT]");
 
-	//----------------------------------------------
-	// Constructors 
-	//----------------------------------------------
-	public Wavelet(AudioObject ao){
-		super(ao, "[FGT]"); 
+    }
 
-	}
-	
-	
-	/**
-	 * --------------------------------------------
-	 * Beginning
-	 * --------------------------------------------
-	 */
-	public int work(float[] buffer)throws AOException{
-	
-		return buffer.length;
-	}
+
+    /**
+     * --------------------------------------------
+     * Beginning
+     * --------------------------------------------
+     */
+    public int work(float[] buffer) throws AOException {
+
+        return buffer.length;
+    }
 
 }

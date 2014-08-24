@@ -21,21 +21,22 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 package jm.audio;
 
- /**
-  * This interface is informed whenever an audio chain completes
-  * processing its current buffer.  The rate at which these buffers are
-  * processed (the size of the buffer) creates the control rate.  The
-  * control rate gives real time audioLines the chance to make adjustments
-  * to audio controls or enter new note information into their associated
-  * instrument.  
-  * @author Andrew Sorensen 
-  * @version 1.0,Sun Feb 25 18:42:43  2001
-  */
-public interface AudioChainListener{
-	/**
-	 * Control change is called whenever an instrument fills its sample
-	 * buffer.  This effectively becomes the rate at which changes to an
-	 * instrument can be made (including starting new notes).
-	 */
-	public abstract void controlChange(float[] buffer, int returned, boolean finished);
+/**
+ * This interface is informed whenever an audio chain completes
+ * processing its current buffer.  The rate at which these buffers are
+ * processed (the size of the buffer) creates the control rate.  The
+ * control rate gives real time audioLines the chance to make adjustments
+ * to audio controls or enter new note information into their associated
+ * instrument.
+ *
+ * @author Andrew Sorensen
+ * @version 1.0, Sun Feb 25 18:42:43  2001
+ */
+public interface AudioChainListener {
+    /**
+     * Control change is called whenever an instrument fills its sample
+     * buffer.  This effectively becomes the rate at which changes to an
+     * instrument can be made (including starting new notes).
+     */
+    public abstract void controlChange(float[] buffer, int returned, boolean finished);
 }

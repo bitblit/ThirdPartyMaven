@@ -31,8 +31,7 @@ import java.io.FilenameFilter;
  * files.  Apparently this only works in the SunOS implementation of the JVM.
  *
  * @author Adam Kirby
- * @version 1.0,Sun Feb 25 18:43:58  2001
- *
+ * @version 1.0, Sun Feb 25 18:43:58  2001
  * @see ReadFileButton
  * @see ReadFolderButton
  */
@@ -41,16 +40,16 @@ class ReadFilenameFilter implements FilenameFilter {
     /**
      * Tests whether the specified file has a jm or MIDI file extension
      *
-     * @param dir   File describing the directory where the file is stored
-     * @param name  String of the filename
-     * @return      true if specified file ends with ".mid", ".midi" or ".jm"
-     *              and does not begin with "."
+     * @param dir  File describing the directory where the file is stored
+     * @param name String of the filename
+     * @return true if specified file ends with ".mid", ".midi" or ".jm"
+     * and does not begin with "."
      */
     public boolean accept(final File dir, final String name) {
         return (!name.startsWith(".") && (name.endsWith(".mid")
-                                          || name.endsWith(".midi")
-                                          || name.endsWith(".jm")))
-               ? true
-               : false;
+                || name.endsWith(".midi")
+                || name.endsWith(".jm")))
+                ? true
+                : false;
     }
 }

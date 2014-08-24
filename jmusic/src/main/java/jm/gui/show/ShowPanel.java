@@ -29,23 +29,21 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 package jm.gui.show;
 
+import jm.music.data.Score;
+
 import java.awt.*;
-import java.awt.event.*;
-import jm.JMC;
-import jm.music.data.*;
-import jm.midi.*;
-import jm.util.*;
 
 /**
-* The tool displays a jMusic class as psudo music notation. To use it write:
-* new ShowPanel(scoreName);
-* Where scoreName is the jMusic Score object.
-* The SetScore() method can be used to pass a new score object to an open panel
-* @author Andrew Brown
- * @version 1.0,Sun Feb 25 18:43
-*/
+ * The tool displays a jMusic class as psudo music notation. To use it write:
+ * new ShowPanel(scoreName);
+ * Where scoreName is the jMusic Score object.
+ * The SetScore() method can be used to pass a new score object to an open panel
+ *
+ * @author Andrew Brown
+ * @version 1.0, Sun Feb 25 18:43
+ */
 
-public class ShowPanel extends ScrollPane { 
+public class ShowPanel extends ScrollPane {
     public Score score;
     protected double beatWidth; //10.0;
     private ShowArea sa;
@@ -53,70 +51,70 @@ public class ShowPanel extends ScrollPane {
     private Panel pan;
     private Frame frame;
     private int panelHeight;
-    
+
     public ShowPanel(Frame frame, Score score) {
         super(ScrollPane.SCROLLBARS_ALWAYS);
         // set initial wideth to show whole score if possible
         beatWidth = 650 / score.getEndTime();
-        if (beatWidth< 1.0) beatWidth = 1.0;
-        if ( beatWidth> 256.0) beatWidth = 256.0;
+        if (beatWidth < 1.0) beatWidth = 1.0;
+        if (beatWidth > 256.0) beatWidth = 256.0;
         this.frame = frame;
         this.score = score;
         // Because the ScrollPanel can only take one componenet 
         // a panel called apn is created to hold all comoponenets
         // then only pan is added to this classes ScrollPane
         pan = new Panel();
-        pan.setLayout(new BorderLayout());    
+        pan.setLayout(new BorderLayout());
         // add the score
         sa = new ShowArea(this); //score, maxWidth, maxParts);
         pan.add("Center", sa);
         //add a ruler
         ruler = new ShowRuler(this);
         pan.add("South", ruler);
-        this.setSize(new Dimension(650,400));
+        this.setSize(new Dimension(650, 400));
         updatePanelHeight();
         this.add(pan);
-        
+
         getHAdjustable().setUnitIncrement(50); //set scroll speed
         getHAdjustable().setBlockIncrement(50);
-        
-        setScrollPosition(0,0);
+
+        setScrollPosition(0, 0);
     }
-    
+
     // this method can be used to update the score continets of an existing ShowScore panel
     public void setScore(Score score) {
         this.score = score;
         beatWidth = this.getSize().width / score.getEndTime();
-        if (beatWidth< 1.0) beatWidth = 1.0;
-        if ( beatWidth> 256.0) beatWidth = 256.0;
+        if (beatWidth < 1.0) beatWidth = 1.0;
+        if (beatWidth > 256.0) beatWidth = 256.0;
         update();
     }
-    
+
     /**
-    * Used to adjust the height when the size of display is changed.
-    */
+     * Used to adjust the height when the size of display is changed.
+     */
     public void updatePanelHeight() {
         panelHeight = sa.getHeight() + ruler.getHeight() + 25;
         this.setSize(new Dimension(this.getSize().width, panelHeight));
     }
-    
+
     /**
-    * Report the current height of th e panel in this object.
-    */
+     * Report the current height of th e panel in this object.
+     */
     public int getHeight() {
         return panelHeight;
     }
-    
+
     /*
     * Return the currently active ShowArea object
     */
     public ShowArea getShowArea() {
         return sa;
     }
-    
+
     public void update() {
         pan.repaint();
-        sa.setSize( (int)Math.round( score.getEndTime()*beatWidth),sa.getHeight());
+        sa.setSize((int) Math.round(score.getEndTime() * beatWidth), sa.getHeight());
         sa.repaint();
         ruler.repaint();
         this.repaint();

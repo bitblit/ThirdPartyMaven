@@ -24,27 +24,28 @@ package jm.constants;
 
 import jm.music.data.Alignment;
 
-/** An interface storing noise constants.
-  * 
-  * @see jm.music.data.Note
-  * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
-  */
+/**
+ * An interface storing noise constants.
+ *
+ * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
+ * @see jm.music.data.Note
+ */
 public interface Alignments {
-    
-        public static final Alignment 
-                START_TOGETHER = Alignment.START_TOGETHER,
-                END_TOGETHER = Alignment.END_TOGETHER,
-                AFTER = Alignment.AFTER,
-                BEFORE = Alignment.BEFORE,
-                CENTRE_ALIGN = Alignment.CENTRE_ALIGN,
-                CENTER_ALIGN = Alignment.CENTRE_ALIGN,
-                START_ON_CENTRE = Alignment.START_ON_CENTRE,
-                START_ON_CENTER = Alignment.START_ON_CENTRE,
-                END_ON_CENTRE = Alignment.END_ON_CENTRE,
-                END_ON_CENTER = Alignment.END_ON_CENTRE,
-                CENTRE_ON_START = Alignment.CENTRE_ON_START,
-                CENTER_ON_START = Alignment.CENTRE_ON_START,
-                CENTRE_ON_END = Alignment.CENTRE_ON_END,
-                CENTER_ON_END = Alignment.CENTRE_ON_END;
-   
+
+    public static final Alignment
+            START_TOGETHER = Alignment.START_TOGETHER,
+            END_TOGETHER = Alignment.END_TOGETHER,
+            AFTER = Alignment.AFTER,
+            BEFORE = Alignment.BEFORE,
+            CENTRE_ALIGN = Alignment.CENTRE_ALIGN,
+            CENTER_ALIGN = Alignment.CENTRE_ALIGN,
+            START_ON_CENTRE = Alignment.START_ON_CENTRE,
+            START_ON_CENTER = Alignment.START_ON_CENTRE,
+            END_ON_CENTRE = Alignment.END_ON_CENTRE,
+            END_ON_CENTER = Alignment.END_ON_CENTRE,
+            CENTRE_ON_START = Alignment.CENTRE_ON_START,
+            CENTER_ON_START = Alignment.CENTRE_ON_START,
+            CENTRE_ON_END = Alignment.CENTRE_ON_END,
+            CENTER_ON_END = Alignment.CENTRE_ON_END;
+
 }

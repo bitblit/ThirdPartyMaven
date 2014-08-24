@@ -21,24 +21,30 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 package jm.audio.synth;
 
-import java.awt.*;
-
 /*
 * The spring class for a spring mass network
 * @author Andrew Brown
 */
 
 public class SpringObject {
-    /** where is the normal resting place? */
+    /**
+     * where is the normal resting place?
+     */
     private int restingLength;
-    /** strength of the spring */
+    /**
+     * strength of the spring
+     */
     private double k = 0.002;
-    /** start pixel location of spring */
-    
-    public SpringObject() { }
-    
+
+    /**
+     * start pixel location of spring
+     */
+
+    public SpringObject() {
+    }
+
     public SpringObject(double constant) {
-    	this.k = constant;
+        this.k = constant;
     }
 
     public double getCurrentForce(double currStartPosition, double currEndPosition) {
@@ -47,8 +53,8 @@ public class SpringObject {
 
         return force;
     }
-    
+
     public void setRestingLength(int length) {
-    	this.restingLength = length;
+        this.restingLength = length;
     }
 }

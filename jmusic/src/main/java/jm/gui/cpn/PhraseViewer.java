@@ -24,108 +24,110 @@
 // leading provider of unvarnished software.
 package jm.gui.cpn;
 
-import jm.music.data.*;
-import java.awt.event.*;
-import java.awt.*; 
-import java.lang.Integer;
-import java.lang.Double;
-import java.util.Vector;
-import java.util.StringTokenizer;
+import jm.music.data.Note;
+import jm.music.data.Phrase;
+
+import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.DecimalFormat;
-import jm.gui.cpn.Stave;
 
-import java.awt.Dialog;
+public class PhraseViewer extends Dialog
+        implements WindowListener {
 
-public class PhraseViewer extends Dialog 
-    implements WindowListener  {
+    private ScrollPane scrollPane = new ScrollPane();
+    private TextArea textArea = new TextArea(20, 120);
+    private Phrase phrase;
+    private Stave stave;
 
-    private ScrollPane   scrollPane = new ScrollPane();
-    private TextArea     textArea   = new TextArea(20, 120);
-    private Phrase       phrase;  
-    private Stave        stave;  
-    
-    private DecimalFormat decimalFormat 
-            = new DecimalFormat( "#####.######" );
-        
+    private DecimalFormat decimalFormat
+            = new DecimalFormat("#####.######");
+
     public PhraseViewer(
-            Frame   parentFrame ) {
-        super( 
-            parentFrame,                
-            "Phrase Detail Display",
-            true );
+            Frame parentFrame) {
+        super(
+                parentFrame,
+                "Phrase Detail Display",
+                true);
         setSize(500, 400);
         placeControls();
         addWindowListener(this);
         setVisible(false);
         pack();
     }
-        
+
 
     private void placeControls() {
-        scrollPane.add(textArea);        
+        scrollPane.add(textArea);
         setLayout(new BorderLayout());
-        add("Center", scrollPane ); 
-    }        
+        add("Center", scrollPane);
+    }
 
     public void showPhrase(
-                    Stave  theStave,
-                    Phrase thePhrase, 
-                    int locX, 
-                    int locY) {
-        stave     = theStave;
-        phrase    = thePhrase;
-        getPhraseText();                
-        setLocation( locX, locY );                  
+            Stave theStave,
+            Phrase thePhrase,
+            int locX,
+            int locY) {
+        stave = theStave;
+        phrase = thePhrase;
+        getPhraseText();
+        setLocation(locX, locY);
         show();
-    }   
-    
+    }
+
     private void getPhraseText() {
         getStaveText();
         textArea.append(
-            "Phrase has " + phrase.size() + " notes.\n");
-            
+                "Phrase has " + phrase.size() + " notes.\n");
+
         textArea.append(
-            "Tempo " 
-            + decimalFormat.format(phrase.getTempo()));                                            
+                "Tempo "
+                        + decimalFormat.format(phrase.getTempo())
+        );
         textArea.append(
-            "    Numerator " + phrase.getNumerator());                                            
+                "    Numerator " + phrase.getNumerator());
         textArea.append(
-            "    Denominator " + phrase.getDenominator());                                            
-        textArea.append("\n" ); 
-    
-        for(int i =0; i < phrase.size(); ++i ) {
-            getNoteText( phrase.getNote(i));
-        }            
-    }        
+                "    Denominator " + phrase.getDenominator());
+        textArea.append("\n");
+
+        for (int i = 0; i < phrase.size(); ++i) {
+            getNoteText(phrase.getNote(i));
+        }
+    }
 
     private void getStaveText() {
         textArea.append(
-            "Stave " + stave.getTitle() + 
-            "   Metre " + 
-            decimalFormat.format(stave.getMetre())
-            + "\n" );
-    }        
-    
-    private void getNoteText( Note n) {
+                "Stave " + stave.getTitle() +
+                        "   Metre " +
+                        decimalFormat.format(stave.getMetre())
+                        + "\n"
+        );
+    }
+
+    private void getNoteText(Note n) {
         textArea.append(
-            "Pitch " + n.getPitch());            
+                "Pitch " + n.getPitch());
         textArea.append(
-            "   Start " + 
-                  decimalFormat.format(n.getSampleStartTime()));            
+                "   Start " +
+                        decimalFormat.format(n.getSampleStartTime())
+        );
         textArea.append(
-            "   Rhythm " + 
-                  decimalFormat.format(n.getRhythmValue()));            
+                "   Rhythm " +
+                        decimalFormat.format(n.getRhythmValue())
+        );
         textArea.append(
-            "   Dur " + 
-                  decimalFormat.format(n.getDuration()));            
+                "   Dur " +
+                        decimalFormat.format(n.getDuration())
+        );
         textArea.append(
-            "   Offset " + 
-                  decimalFormat.format(n.getOffset()));            
+                "   Offset " +
+                        decimalFormat.format(n.getOffset())
+        );
         textArea.append(
-            "   Vol " + n.getDynamic());            
+                "   Vol " + n.getDynamic());
         textArea.append("\n");
     }
-    
+
     public void windowOpened(WindowEvent e) {
     }
 
@@ -134,11 +136,10 @@ public class PhraseViewer extends Dialog
      * The close operation can be overridden at this point.
      */
     public void windowClosing(WindowEvent e) {
-        if(e.getSource() == this) dispose();
+        if (e.getSource() == this) dispose();
         //System.exit(0);
     }
 
-    
 
     /**
      * Invoked when a window has been closed.

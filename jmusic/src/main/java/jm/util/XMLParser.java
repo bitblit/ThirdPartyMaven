@@ -23,44 +23,44 @@
 
 package jm.util;
 
-import java.util.Enumeration;
-import java.util.Vector;
-
 import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
 
+import java.util.Enumeration;
+import java.util.Vector;
+
 /**
-  *
-  * @author Adam Kirby
-  * @version 0.2, 30th June 2002
-  */
+ * @author Adam Kirby
+ * @version 0.2, 30th June 2002
+ */
 class XMLParser {
-    
-    private XMLParser() {
-    }
 
     private static final XMLStyle DEFAULT_XML_STYLE =
             new StandardXMLStyle();
 
+    private XMLParser() {
+    }
+
     public static String scoreToXMLString(final Score score) {
         return DEFAULT_XML_STYLE.initialXMLDeclaration()
-               + XMLParser.scoreToXMLString(score, DEFAULT_XML_STYLE);
+                + XMLParser.scoreToXMLString(score, DEFAULT_XML_STYLE);
     }
 
     private static String scoreToXMLString(
-                final Score score,
-                final XMLStyle xmlStyle) {
+            final Score score,
+            final XMLStyle xmlStyle) {
         StringBuffer buffer = new StringBuffer();
         buffer.append(
                 xmlStyle.getLeftAngleBracket() + xmlStyle.getScoreTagName());
-        if (! score.getTitle().equals(Score.DEFAULT_TITLE)) {
+        if (!score.getTitle().equals(Score.DEFAULT_TITLE)) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getTitleAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getTitleAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+            );
             String title = score.getTitle();
             for (int i = 0; i < title.length(); i++) {
                 char character = title.charAt(i);
@@ -93,49 +93,54 @@ class XMLParser {
         if (score.getTempo() != Score.DEFAULT_TEMPO) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getTempoAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (xmlStyle.limitDecimalPlaces()
-                        ? XMLParser.limitDecimalPlaces(score.getTempo(), 2)
-                        : Double.toString(score.getTempo()))
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getTempoAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (xmlStyle.limitDecimalPlaces()
+                            ? XMLParser.limitDecimalPlaces(score.getTempo(), 2)
+                            : Double.toString(score.getTempo()))
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (score.getKeySignature() != Score.DEFAULT_KEY_SIGNATURE) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getKeySignatureAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(score.getKeySignature())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getKeySignatureAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(score.getKeySignature())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (score.getKeyQuality() != Score.DEFAULT_KEY_QUALITY) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getKeyQualityAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(score.getKeyQuality())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getKeyQualityAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(score.getKeyQuality())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (score.getNumerator() != Score.DEFAULT_NUMERATOR) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getNumeratorAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(score.getNumerator())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getNumeratorAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(score.getNumerator())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (score.getDenominator() != Score.DEFAULT_DENOMINATOR) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getDenominatorAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(score.getDenominator())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getDenominatorAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(score.getDenominator())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         int size = score.size();
         if (size == 0) {
@@ -148,30 +153,32 @@ class XMLParser {
             }
             buffer.append(
                     xmlStyle.getLeftAngleBracket()
-                    + xmlStyle.getSlash()
-                    + xmlStyle.getScoreTagName()
-                    + xmlStyle.getRightAngleBracket());
+                            + xmlStyle.getSlash()
+                            + xmlStyle.getScoreTagName()
+                            + xmlStyle.getRightAngleBracket()
+            );
         }
-        return buffer.toString();            
+        return buffer.toString();
     }
 
     public static String partToXMLString(final Part part) {
         return DEFAULT_XML_STYLE.initialXMLDeclaration()
-               + XMLParser.partToXMLString(part, DEFAULT_XML_STYLE);
+                + XMLParser.partToXMLString(part, DEFAULT_XML_STYLE);
     }
 
     private static String partToXMLString(
-                final Part part,
-                final XMLStyle xmlStyle) {
+            final Part part,
+            final XMLStyle xmlStyle) {
         StringBuffer buffer = new StringBuffer();
         buffer.append(
                 xmlStyle.getLeftAngleBracket() + xmlStyle.getPartTagName());
-        if (! part.getTitle().equals(Part.DEFAULT_TITLE)) {
+        if (!part.getTitle().equals(Part.DEFAULT_TITLE)) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getTitleAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getTitleAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+            );
             String title = part.getTitle();
             for (int i = 0; i < title.length(); i++) {
                 char character = title.charAt(i);
@@ -202,78 +209,86 @@ class XMLParser {
         if (part.getChannel() != Part.DEFAULT_CHANNEL) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getChannelAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(part.getChannel())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getChannelAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(part.getChannel())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (part.getInstrument() != Part.DEFAULT_INSTRUMENT) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getInstrumentAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(part.getInstrument())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getInstrumentAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(part.getInstrument())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (part.getTempo() != Part.DEFAULT_TEMPO) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getTempoAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (xmlStyle.limitDecimalPlaces()
-                        ? XMLParser.limitDecimalPlaces(part.getTempo(), 2)
-                        : Double.toString(part.getTempo()))
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getTempoAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (xmlStyle.limitDecimalPlaces()
+                            ? XMLParser.limitDecimalPlaces(part.getTempo(), 2)
+                            : Double.toString(part.getTempo()))
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (part.getKeySignature() != Part.DEFAULT_KEY_SIGNATURE) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getKeySignatureAttributeName()
-                    + "=" 
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(part.getKeySignature())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getKeySignatureAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(part.getKeySignature())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (part.getKeyQuality() != Part.DEFAULT_KEY_QUALITY) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getKeyQualityAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(part.getKeyQuality())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getKeyQualityAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(part.getKeyQuality())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (part.getNumerator() != Part.DEFAULT_NUMERATOR) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getNumeratorAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(part.getNumerator())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getNumeratorAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(part.getNumerator())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (part.getDenominator() != Part.DEFAULT_DENOMINATOR) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getDenominatorAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(part.getDenominator()) 
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getDenominatorAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(part.getDenominator())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (part.getPan() != Part.DEFAULT_PAN) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getPanAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (xmlStyle.limitDecimalPlaces()
-                        ? XMLParser.limitDecimalPlaces(part.getPan(), 2)
-                        : Double.toString(part.getPan()))
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getPanAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (xmlStyle.limitDecimalPlaces()
+                            ? XMLParser.limitDecimalPlaces(part.getPan(), 2)
+                            : Double.toString(part.getPan()))
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         int size = part.size();
         if (size == 0) {
@@ -281,34 +296,36 @@ class XMLParser {
                     xmlStyle.getSlash() + xmlStyle.getRightAngleBracket());
         } else {
             buffer.append(xmlStyle.getRightAngleBracket());
-            for (int i = 0;  i < part.size(); i++) {
+            for (int i = 0; i < part.size(); i++) {
                 buffer.append(phraseToXMLString(part.getPhrase(i), xmlStyle));
             }
             buffer.append(
                     xmlStyle.getLeftAngleBracket() + xmlStyle.getSlash()
-                    + xmlStyle.getPartTagName()
-                    + xmlStyle.getRightAngleBracket());
+                            + xmlStyle.getPartTagName()
+                            + xmlStyle.getRightAngleBracket()
+            );
         }
         return buffer.toString();
     }
 
     public static String phraseToXMLString(final Phrase phrase) {
-        return DEFAULT_XML_STYLE.initialXMLDeclaration() 
-               + XMLParser.phraseToXMLString(phrase, DEFAULT_XML_STYLE);
+        return DEFAULT_XML_STYLE.initialXMLDeclaration()
+                + XMLParser.phraseToXMLString(phrase, DEFAULT_XML_STYLE);
     }
 
     private static String phraseToXMLString(
-                final Phrase phrase,
-                final XMLStyle xmlStyle) {
+            final Phrase phrase,
+            final XMLStyle xmlStyle) {
         StringBuffer buffer = new StringBuffer();
         buffer.append(
                 xmlStyle.getLeftAngleBracket() + xmlStyle.getPhraseTagName());
-        if (! phrase.getTitle().equals(Phrase.DEFAULT_TITLE)) {
+        if (!phrase.getTitle().equals(Phrase.DEFAULT_TITLE)) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getTitleAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getTitleAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+            );
             String title = phrase.getTitle();
             for (int i = 0; i < title.length(); i++) {
                 char character = title.charAt(i);
@@ -339,55 +356,60 @@ class XMLParser {
         if (phrase.getStartTime() != Phrase.DEFAULT_START_TIME) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getStartTimeAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (xmlStyle.limitDecimalPlaces()
-                        ? XMLParser.limitDecimalPlaces(phrase.getStartTime(), 2)
-                        : Double.toString(phrase.getStartTime()))
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getStartTimeAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (xmlStyle.limitDecimalPlaces()
+                            ? XMLParser.limitDecimalPlaces(phrase.getStartTime(), 2)
+                            : Double.toString(phrase.getStartTime()))
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (phrase.getInstrument() != Phrase.DEFAULT_INSTRUMENT) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getInstrumentAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(phrase.getInstrument())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getInstrumentAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(phrase.getInstrument())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (phrase.getPan() != Phrase.DEFAULT_TEMPO) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getTempoAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (xmlStyle.limitDecimalPlaces()
-                        ? XMLParser.limitDecimalPlaces(phrase.getTempo(), 2)
-                        : Double.toString(phrase.getTempo()))
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getTempoAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (xmlStyle.limitDecimalPlaces()
+                            ? XMLParser.limitDecimalPlaces(phrase.getTempo(), 2)
+                            : Double.toString(phrase.getTempo()))
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (phrase.getAppend() != Phrase.DEFAULT_APPEND) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getAppendAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (phrase.getAppend()
-                        ? Boolean.TRUE.toString()
-                        : Boolean.FALSE.toString())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getAppendAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (phrase.getAppend()
+                            ? Boolean.TRUE.toString()
+                            : Boolean.FALSE.toString())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (phrase.getPan() != Phrase.DEFAULT_PAN) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getPanAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (xmlStyle.limitDecimalPlaces()
-                        ? XMLParser.limitDecimalPlaces(phrase.getPan(), 2)
-                        : Double.toString(phrase.getPan()))
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getPanAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (xmlStyle.limitDecimalPlaces()
+                            ? XMLParser.limitDecimalPlaces(phrase.getPan(), 2)
+                            : Double.toString(phrase.getPan()))
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         int size = phrase.size();
         if (size == 0) {
@@ -400,114 +422,123 @@ class XMLParser {
             }
             buffer.append(
                     xmlStyle.getLeftAngleBracket()
-                    + xmlStyle.getSlash()
-                    + xmlStyle.getPhraseTagName()
-                    + xmlStyle.getRightAngleBracket());
+                            + xmlStyle.getSlash()
+                            + xmlStyle.getPhraseTagName()
+                            + xmlStyle.getRightAngleBracket()
+            );
         }
         return buffer.toString();
     }
 
     public static String noteToXMLString(final Note note) {
-        return DEFAULT_XML_STYLE.initialXMLDeclaration() 
-               + XMLParser.noteToXMLString(note, DEFAULT_XML_STYLE);
+        return DEFAULT_XML_STYLE.initialXMLDeclaration()
+                + XMLParser.noteToXMLString(note, DEFAULT_XML_STYLE);
     }
 
     private static String noteToXMLString(
-                final Note note,
-                final XMLStyle xmlStyle) {
+            final Note note,
+            final XMLStyle xmlStyle) {
         StringBuffer buffer = new StringBuffer();
         buffer.append(
                 xmlStyle.getLeftAngleBracket() + xmlStyle.getNoteTagName());
-		if (note.getPitchType() == Note.MIDI_PITCH) {
-			if (note.getPitch() != Note.DEFAULT_PITCH) {
-				buffer.append(
-						xmlStyle.getSpace()
-						+ xmlStyle.getPitchAttributeName()
-						+ "="
-						+ xmlStyle.getDoubleQuote()
-						+ Integer.toString(note.getPitch())
-						+ xmlStyle.getDoubleQuote());
-			}
-		} else {
-			buffer.append(
-				xmlStyle.getSpace()
-				+ xmlStyle.getFrequencyAttributeName()
-				+ "="
-				+ xmlStyle.getDoubleQuote()
-				+ Double.toString(note.getFrequency())
-				+ xmlStyle.getDoubleQuote());
-		}
+        if (note.getPitchType() == Note.MIDI_PITCH) {
+            if (note.getPitch() != Note.DEFAULT_PITCH) {
+                buffer.append(
+                        xmlStyle.getSpace()
+                                + xmlStyle.getPitchAttributeName()
+                                + "="
+                                + xmlStyle.getDoubleQuote()
+                                + Integer.toString(note.getPitch())
+                                + xmlStyle.getDoubleQuote()
+                );
+            }
+        } else {
+            buffer.append(
+                    xmlStyle.getSpace()
+                            + xmlStyle.getFrequencyAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Double.toString(note.getFrequency())
+                            + xmlStyle.getDoubleQuote()
+            );
+        }
         if (note.getDynamic() != Note.DEFAULT_DYNAMIC) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getDynamicAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + Integer.toString(note.getDynamic())
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getDynamicAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + Integer.toString(note.getDynamic())
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (note.getRhythmValue() != Note.DEFAULT_RHYTHM_VALUE) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getRhythmValueAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (xmlStyle.limitDecimalPlaces()
-                        ? XMLParser.limitDecimalPlaces(note.getRhythmValue(), 2)
-                        : Double.toString(note.getRhythmValue()))
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getRhythmValueAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (xmlStyle.limitDecimalPlaces()
+                            ? XMLParser.limitDecimalPlaces(note.getRhythmValue(), 2)
+                            : Double.toString(note.getRhythmValue()))
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (note.getPan() != Note.DEFAULT_PAN) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getPanAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (xmlStyle.limitDecimalPlaces()
-                        ? XMLParser.limitDecimalPlaces(note.getPan(), 2)
-                        : Double.toString(note.getPan()))
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getPanAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (xmlStyle.limitDecimalPlaces()
+                            ? XMLParser.limitDecimalPlaces(note.getPan(), 2)
+                            : Double.toString(note.getPan()))
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (note.getDuration() != Note.DEFAULT_DURATION) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getDurationAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (xmlStyle.limitDecimalPlaces()
-                        ? XMLParser.limitDecimalPlaces(note.getDuration(), 2)
-                        : Double.toString(note.getDuration()))
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getDurationAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (xmlStyle.limitDecimalPlaces()
+                            ? XMLParser.limitDecimalPlaces(note.getDuration(), 2)
+                            : Double.toString(note.getDuration()))
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (note.getOffset() != Note.DEFAULT_OFFSET) {
             buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getOffsetAttributeName()
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (xmlStyle.limitDecimalPlaces()
-                        ? XMLParser.limitDecimalPlaces(note.getOffset(), 2)
-                        : Double.toString(note.getOffset()))
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getOffsetAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (xmlStyle.limitDecimalPlaces()
+                            ? XMLParser.limitDecimalPlaces(note.getOffset(), 2)
+                            : Double.toString(note.getOffset()))
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         if (note.getSampleStartTime() != Note.DEFAULT_SAMPLE_START_TIME) {
-                buffer.append(
+            buffer.append(
                     xmlStyle.getSpace()
-                    + xmlStyle.getSampleStartTimeAttributeName() 
-                    + "="
-                    + xmlStyle.getDoubleQuote()
-                    + (xmlStyle.limitDecimalPlaces()
-                        ? XMLParser.limitDecimalPlaces(
-                                note.getSampleStartTime(), 2)
-                        : Double.toString(note.getSampleStartTime()))
-                    + xmlStyle.getDoubleQuote());
+                            + xmlStyle.getSampleStartTimeAttributeName()
+                            + "="
+                            + xmlStyle.getDoubleQuote()
+                            + (xmlStyle.limitDecimalPlaces()
+                            ? XMLParser.limitDecimalPlaces(
+                            note.getSampleStartTime(), 2)
+                            : Double.toString(note.getSampleStartTime()))
+                            + xmlStyle.getDoubleQuote()
+            );
         }
         buffer.append(xmlStyle.getSlash() + xmlStyle.getRightAngleBracket());
         return buffer.toString();
     }
 
     private static String limitDecimalPlaces(final double d,
-                                     final int places) {
+                                             final int places) {
         String dString = Double.toString(d);
         int lastIndex = dString.lastIndexOf(".") + places + 1;
         if (lastIndex > dString.length()) {
@@ -515,121 +546,131 @@ class XMLParser {
         }
         return dString.substring(0, lastIndex);
     }
-    
+
     public static Score xmlStringToScore(final String string)
-                                  throws ConversionException {
+            throws ConversionException {
         String xmlAsString = preprocessString(string);
         Element[] elements = XMLParser.xmlStringToElements(xmlAsString);
         if (elements.length != 1) {
             throw new ConversionException(
                     "There can be only one root element.  This string invalidly"
-                    + " has " + elements.length + " root elements.");
+                            + " has " + elements.length + " root elements."
+            );
         }
         Element element = elements[0];
-        if (XMLStyles.isValidScoreTag(elements[0].getName())) {           
-                return elementToScore(elements[0]);
+        if (XMLStyles.isValidScoreTag(elements[0].getName())) {
+            return elementToScore(elements[0]);
         } else if (XMLStyles.isValidPartTag(elements[0].getName())) {
-                return new Score(elementToPart(elements[0]));
+            return new Score(elementToPart(elements[0]));
         } else if (XMLStyles.isValidPhraseTag(elements[0].getName())) {
-                return new Score(new Part(elementToPhrase(elements[0])));
+            return new Score(new Part(elementToPhrase(elements[0])));
         } else if (XMLStyles.isValidNoteTag(elements[0].getName())) {
-                return new Score(new Part(
-                                new Phrase(elementToNote(elements[0]))));
+            return new Score(new Part(
+                    new Phrase(elementToNote(elements[0]))));
         }
-        throw new ConversionException("Unrecognised root element: " 
-                                      + elements[0].getName());
+        throw new ConversionException("Unrecognised root element: "
+                + elements[0].getName());
     }
 
     public static Part xmlStringToPart(final String string)
-                                throws ConversionException {
+            throws ConversionException {
         String xmlAsString = preprocessString(string);
         Element[] elements = XMLParser.xmlStringToElements(xmlAsString);
         if (elements.length != 1) {
             throw new ConversionException(
                     "There can be only one root element.  This string invalidly"
-                    + " has " + elements.length + " root elements.");
+                            + " has " + elements.length + " root elements."
+            );
         }
         Element element = elements[0];
-        if (XMLStyles.isValidScoreTag(elements[0].getName())) {           
-                throw new ConversionException(
-                                "This XML string represents a Score, use the "
-                                + "xmlStringToScore(String) method instead.");
+        if (XMLStyles.isValidScoreTag(elements[0].getName())) {
+            throw new ConversionException(
+                    "This XML string represents a Score, use the "
+                            + "xmlStringToScore(String) method instead."
+            );
         } else if (XMLStyles.isValidPartTag(elements[0].getName())) {
-                return elementToPart(elements[0]);
+            return elementToPart(elements[0]);
         } else if (XMLStyles.isValidPhraseTag(elements[0].getName())) {
-                return new Part(elementToPhrase(elements[0]));
+            return new Part(elementToPhrase(elements[0]));
         } else if (XMLStyles.isValidNoteTag(elements[0].getName())) {
-                return new Part(new Phrase(elementToNote(elements[0])));
+            return new Part(new Phrase(elementToNote(elements[0])));
         }
-        throw new ConversionException("Unrecognised root element: " 
-                                      + elements[0].getName());
+        throw new ConversionException("Unrecognised root element: "
+                + elements[0].getName());
     }
-    
+
     public static Phrase xmlStringToPhrase(final String string)
-                                    throws ConversionException {
+            throws ConversionException {
         String xmlAsString = preprocessString(string);
         Element[] elements = XMLParser.xmlStringToElements(xmlAsString);
         if (elements.length != 1) {
             throw new ConversionException(
                     "There can be only one root element.  This string invalidly"
-                    + " has " + elements.length + " root elements.");
+                            + " has " + elements.length + " root elements."
+            );
         }
         Element element = elements[0];
-        if (XMLStyles.isValidScoreTag(elements[0].getName())) {           
-                throw new ConversionException(
-                                "This XML string represents a Score, use the "
-                                + "xmlStringToScore(String) method instead.");
+        if (XMLStyles.isValidScoreTag(elements[0].getName())) {
+            throw new ConversionException(
+                    "This XML string represents a Score, use the "
+                            + "xmlStringToScore(String) method instead."
+            );
         } else if (XMLStyles.isValidPartTag(elements[0].getName())) {
-                throw new ConversionException(
-                                "This XML string represents a Part, use the "
-                                + "xmlStringToPart(String) method instead.");
+            throw new ConversionException(
+                    "This XML string represents a Part, use the "
+                            + "xmlStringToPart(String) method instead."
+            );
         } else if (XMLStyles.isValidPhraseTag(elements[0].getName())) {
-                return elementToPhrase(elements[0]);
+            return elementToPhrase(elements[0]);
         } else if (XMLStyles.isValidNoteTag(elements[0].getName())) {
-                return new Phrase(elementToNote(elements[0]));
+            return new Phrase(elementToNote(elements[0]));
         }
-        throw new ConversionException("Unrecognised root element: " 
-                                      + elements[0].getName());
+        throw new ConversionException("Unrecognised root element: "
+                + elements[0].getName());
     }
-    
+
     public static Note xmlStringToNote(final String string)
-                                throws ConversionException {
+            throws ConversionException {
         String xmlAsString = preprocessString(string);
         Element[] elements = XMLParser.xmlStringToElements(xmlAsString);
         if (elements.length != 1) {
             throw new ConversionException(
                     "There can be only one root element.  This string invalidly"
-                    + " has " + elements.length + " root elements.");
+                            + " has " + elements.length + " root elements."
+            );
         }
         Element element = elements[0];
-        if (XMLStyles.isValidScoreTag(elements[0].getName())) {           
-                throw new ConversionException(
-                                "This XML string represents a Score, use the "
-                                + "xmlStringToScore(String) method instead.");
+        if (XMLStyles.isValidScoreTag(elements[0].getName())) {
+            throw new ConversionException(
+                    "This XML string represents a Score, use the "
+                            + "xmlStringToScore(String) method instead."
+            );
         } else if (XMLStyles.isValidPartTag(elements[0].getName())) {
-                throw new ConversionException(
-                                "This XML string represents a Part, use the "
-                                + "xmlStringToPart(String) method instead.");
+            throw new ConversionException(
+                    "This XML string represents a Part, use the "
+                            + "xmlStringToPart(String) method instead."
+            );
         } else if (XMLStyles.isValidPhraseTag(elements[0].getName())) {
-                throw new ConversionException(
-                                "This XML string represents a Phrase, use the "
-                                + "xmlStringToPhrase(String) method instead.");
+            throw new ConversionException(
+                    "This XML string represents a Phrase, use the "
+                            + "xmlStringToPhrase(String) method instead."
+            );
         } else if (XMLStyles.isValidNoteTag(elements[0].getName())) {
-                return elementToNote(elements[0]);
+            return elementToNote(elements[0]);
         }
-        throw new ConversionException("Unrecognised root element: " 
-                                      + elements[0].getName());
+        throw new ConversionException("Unrecognised root element: "
+                + elements[0].getName());
     }
-    private static String preprocessString(final String string) 
-                                    throws ConversionException
-    {
+
+    private static String preprocessString(final String string)
+            throws ConversionException {
         String xmlAsString = string;
         for (int i = 0; i < XMLStyles.styles.length; i++) {
-                String decl = XMLStyles.styles[i].initialXMLDeclaration(); 
-                if (string.startsWith(decl)) {
-                        xmlAsString = xmlAsString.substring(decl.length());
-                        break;
-                }
+            String decl = XMLStyles.styles[i].initialXMLDeclaration();
+            if (string.startsWith(decl)) {
+                xmlAsString = xmlAsString.substring(decl.length());
+                break;
+            }
         }
         char[] xmlAsCharArray = xmlAsString.toCharArray();
         StringBuffer buffer = null;
@@ -651,7 +692,7 @@ class XMLParser {
                 }
                 buffer.append(REFERENCE_CHARS[i]);
                 lastIndex += 3;
-    
+
                 currentIndex = xmlAsString.indexOf(pattern, lastIndex);
             }
 
@@ -666,78 +707,84 @@ class XMLParser {
         }
         return xmlAsString;
     }
-    
+
     private static Score elementToScore(Element element)
             throws
-                ConversionException {
+            ConversionException {
         XMLStyle xmlStyle = new StandardXMLStyle();
-        if (! XMLStyles.isValidScoreTag(element.getName())) {
-           throw new ConversionException(
+        if (!XMLStyles.isValidScoreTag(element.getName())) {
+            throw new ConversionException(
                     "The root element must have the name '"
-                    + xmlStyle.getScoreTagName() + "'.  The invalid name used "
-                    + "was '" + element.getName() + "'.");
+                            + xmlStyle.getScoreTagName() + "'.  The invalid name used "
+                            + "was '" + element.getName() + "'."
+            );
         }
         Score returnScore = new Score();
         String attributeValue;
-                                         
+
         attributeValue = XMLStyles.getTitleAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             returnScore.setTitle(attributeValue);
         }
         attributeValue = XMLStyles.getTempoAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnScore.setTempo(
                         Double.valueOf(attributeValue).doubleValue());
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getTempoAttributeName() + "' of element '"
-                        + xmlStyle.getScoreTagName() + "' must represent a Java double.");
+                                + "attribute '" + xmlStyle.getTempoAttributeName() + "' of element '"
+                                + xmlStyle.getScoreTagName() + "' must represent a Java double."
+                );
             }
         }
         attributeValue = XMLStyles.getKeySignatureAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnScore.setKeySignature(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getKeySignatureAttributeName() + "' of element '"
-                        + xmlStyle.getScoreTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getKeySignatureAttributeName() + "' of element '"
+                                + xmlStyle.getScoreTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getKeyQualityAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnScore.setKeyQuality(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getKeyQualityAttributeName() + "' of element '"
-                        + xmlStyle.getScoreTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getKeyQualityAttributeName() + "' of element '"
+                                + xmlStyle.getScoreTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getNumeratorAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnScore.setNumerator(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getNumeratorAttributeName() + "' of element '"
-                        + xmlStyle.getScoreTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getNumeratorAttributeName() + "' of element '"
+                                + xmlStyle.getScoreTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getDenominatorAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnScore.setDenominator(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getDenominatorAttributeName() + "' of element '"
-                        + xmlStyle.getScoreTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getDenominatorAttributeName() + "' of element '"
+                                + xmlStyle.getScoreTagName() + "' must represent a Java integer."
+                );
             }
         }
         Element[] children = element.getChildren();
@@ -751,107 +798,116 @@ class XMLParser {
 
     private static Part elementToPart(Element element)
             throws
-                ConversionException {
+            ConversionException {
         XMLStyle xmlStyle = new StandardXMLStyle();
-        if (! XMLStyles.isValidPartTag(element.getName())) {
+        if (!XMLStyles.isValidPartTag(element.getName())) {
             throw new ConversionException(
                     "Invalid element: " + element.getName() + ".  The only "
-                    + "accepted tag name is '" + xmlStyle.getPartTagName() + "'.");
+                            + "accepted tag name is '" + xmlStyle.getPartTagName() + "'."
+            );
         }
         Part returnPart = new Part();
         String attributeValue;
 
         attributeValue = XMLStyles.getTitleAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             returnPart.setTitle(attributeValue);
         }
         attributeValue = XMLStyles.getChannelAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPart.setChannel(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getChannelAttributeName() + "' of element '"
-                        + xmlStyle.getPartTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getChannelAttributeName() + "' of element '"
+                                + xmlStyle.getPartTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getInstrumentAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPart.setInstrument(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getInstrumentAttributeName() + "' of element '"
-                        + xmlStyle.getPartTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getInstrumentAttributeName() + "' of element '"
+                                + xmlStyle.getPartTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getTempoAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPart.setTempo(
                         Double.valueOf(attributeValue).doubleValue());
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getTempoAttributeName() + "' of element '"
-                        + xmlStyle.getPartTagName() + "' must represent a Java double.");
+                                + "attribute '" + xmlStyle.getTempoAttributeName() + "' of element '"
+                                + xmlStyle.getPartTagName() + "' must represent a Java double."
+                );
             }
         }
         attributeValue = XMLStyles.getKeySignatureAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPart.setKeySignature(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getKeySignatureAttributeName() + "' of element '"
-                        + xmlStyle.getPartTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getKeySignatureAttributeName() + "' of element '"
+                                + xmlStyle.getPartTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getKeyQualityAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPart.setKeyQuality(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getKeyQualityAttributeName() + "' of element '"
-                        + xmlStyle.getScoreTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getKeyQualityAttributeName() + "' of element '"
+                                + xmlStyle.getScoreTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getNumeratorAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPart.setNumerator(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getNumeratorAttributeName() + "' of element '"
-                        + xmlStyle.getPartTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getNumeratorAttributeName() + "' of element '"
+                                + xmlStyle.getPartTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getDenominatorAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPart.setDenominator(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getDenominatorAttributeName() + "' of element '"
-                        + xmlStyle.getPartTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getDenominatorAttributeName() + "' of element '"
+                                + xmlStyle.getPartTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getPanAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPart.setPan(Double.valueOf(attributeValue).doubleValue());
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getPanAttributeName() + "' of element '"
-                        + xmlStyle.getPartTagName() + "' must represent a Java double.");
+                                + "attribute '" + xmlStyle.getPanAttributeName() + "' of element '"
+                                + xmlStyle.getPartTagName() + "' must represent a Java double."
+                );
             }
         }
         Element[] elements = element.getChildren();
@@ -865,76 +921,82 @@ class XMLParser {
 
     private static Phrase elementToPhrase(Element element)
             throws
-                ConversionException {
+            ConversionException {
         XMLStyle xmlStyle = new StandardXMLStyle();
-        if (! XMLStyles.isValidPhraseTag(element.getName())) {
+        if (!XMLStyles.isValidPhraseTag(element.getName())) {
             throw new ConversionException(
                     "Invalid element: " + element.getName() + ".  The only "
-                    + "accepted tag name is '" + xmlStyle.getPhraseTagName() + "'.");
+                            + "accepted tag name is '" + xmlStyle.getPhraseTagName() + "'."
+            );
         }
         Phrase returnPhrase = new Phrase();
         String attributeValue;
 
         attributeValue = XMLStyles.getTitleAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPhrase.setTitle(attributeValue);
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getTitleAttributeName() + "' of element '"
-                        + xmlStyle.getPhraseTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getTitleAttributeName() + "' of element '"
+                                + xmlStyle.getPhraseTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getStartTimeAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPhrase.setStartTime(
                         Double.valueOf(attributeValue).doubleValue());
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getStartTimeAttributeName() + "' of element '"
-                        + xmlStyle.getPhraseTagName() + "' must represent a Java double.");
+                                + "attribute '" + xmlStyle.getStartTimeAttributeName() + "' of element '"
+                                + xmlStyle.getPhraseTagName() + "' must represent a Java double."
+                );
             }
         }
         attributeValue = XMLStyles.getInstrumentAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPhrase.setInstrument(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getInstrumentAttributeName() + "' of element '"
-                        + xmlStyle.getPhraseTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getInstrumentAttributeName() + "' of element '"
+                                + xmlStyle.getPhraseTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getTempoAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPhrase.setTempo(
                         Double.valueOf(attributeValue).doubleValue());
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getTempoAttributeName() + "' of element '"
-                        + xmlStyle.getPhraseTagName() + "' must represent a Java double.");
+                                + "attribute '" + xmlStyle.getTempoAttributeName() + "' of element '"
+                                + xmlStyle.getPhraseTagName() + "' must represent a Java double."
+                );
             }
         }
         attributeValue = XMLStyles.getAppendAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             returnPhrase.setAppend(new Boolean(attributeValue).booleanValue());
         }
         attributeValue = XMLStyles.getPanAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnPhrase.setPan(
                         Double.valueOf(attributeValue).doubleValue());
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getPanAttributeName() + "' of element '"
-                        + xmlStyle.getPhraseTagName() + "' must represent a Java double.");
+                                + "attribute '" + xmlStyle.getPanAttributeName() + "' of element '"
+                                + xmlStyle.getPhraseTagName() + "' must represent a Java double."
+                );
             }
         }
         Element[] elements = element.getChildren();
@@ -948,117 +1010,126 @@ class XMLParser {
 
     private static Note elementToNote(Element element)
             throws
-                ConversionException {
+            ConversionException {
         XMLStyle xmlStyle = new StandardXMLStyle();
-        if (! XMLStyles.isValidNoteTag(element.getName())) {
+        if (!XMLStyles.isValidNoteTag(element.getName())) {
             throw new ConversionException(
                     "Invalid element: " + element.getName() + ".  The only "
-                    + "accepted tag name is '" + xmlStyle.getNoteTagName() + "'.");
+                            + "accepted tag name is '" + xmlStyle.getNoteTagName() + "'."
+            );
         }
         Note returnNote = new Note();
         String attributeValue;
 
         attributeValue = XMLStyles.getPitchAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnNote.setPitch(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getPitchAttributeName() + "' of element '"
-                        + xmlStyle.getNoteTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getPitchAttributeName() + "' of element '"
+                                + xmlStyle.getNoteTagName() + "' must represent a Java integer."
+                );
             }
         }
-		attributeValue = XMLStyles.getFrequencyAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        attributeValue = XMLStyles.getFrequencyAttributeValue(element);
+        if (!attributeValue.equals("")) {
             try {
                 double tempVal = Double.valueOf(attributeValue).doubleValue();
                 returnNote.setFrequency(tempVal);
             } catch (NumberFormatException e) {
                 throw new ConversionException(
-					"Invalid attribute value: " + attributeValue + ".  The "
-					+ "attribute '" + xmlStyle.getFrequencyAttributeName() + "' of element '"
-					+ xmlStyle.getNoteTagName() + "' must represent a Java double.");
+                        "Invalid attribute value: " + attributeValue + ".  The "
+                                + "attribute '" + xmlStyle.getFrequencyAttributeName() + "' of element '"
+                                + xmlStyle.getNoteTagName() + "' must represent a Java double."
+                );
             }
         }
         attributeValue = XMLStyles.getDynamicAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnNote.setDynamic(Integer.parseInt(attributeValue));
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getDynamicAttributeName() + "' of element '"
-                        + xmlStyle.getNoteTagName() + "' must represent a Java integer.");
+                                + "attribute '" + xmlStyle.getDynamicAttributeName() + "' of element '"
+                                + xmlStyle.getNoteTagName() + "' must represent a Java integer."
+                );
             }
         }
         attributeValue = XMLStyles.getRhythmValueAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnNote.setRhythmValue(
                         Double.valueOf(attributeValue).doubleValue());
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getRhythmValueAttributeName() + "' of element '"
-                        + xmlStyle.getNoteTagName() + "' must represent a Java double.");
+                                + "attribute '" + xmlStyle.getRhythmValueAttributeName() + "' of element '"
+                                + xmlStyle.getNoteTagName() + "' must represent a Java double."
+                );
             }
         }
         attributeValue = XMLStyles.getPanAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnNote.setPan(Double.valueOf(attributeValue).doubleValue());
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getPanAttributeName() + "' of element '"
-                        + xmlStyle.getNoteTagName() + "' must represent a Java double.");
+                                + "attribute '" + xmlStyle.getPanAttributeName() + "' of element '"
+                                + xmlStyle.getNoteTagName() + "' must represent a Java double."
+                );
             }
         }
         attributeValue = XMLStyles.getDurationAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnNote.setDuration(
                         Double.valueOf(attributeValue).doubleValue());
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getDurationAttributeName() + "' of element '"
-                        + xmlStyle.getNoteTagName() + "' must represent a Java double.");
+                                + "attribute '" + xmlStyle.getDurationAttributeName() + "' of element '"
+                                + xmlStyle.getNoteTagName() + "' must represent a Java double."
+                );
             }
         }
         attributeValue = XMLStyles.getOffsetAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnNote.setOffset(
                         Double.valueOf(attributeValue).doubleValue());
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getOffsetAttributeName() + "' of element '"
-                        + xmlStyle.getNoteTagName() + "' must represent a Java double.");
+                                + "attribute '" + xmlStyle.getOffsetAttributeName() + "' of element '"
+                                + xmlStyle.getNoteTagName() + "' must represent a Java double."
+                );
             }
         }
         attributeValue = XMLStyles.getSampleStartTimeAttributeValue(element);
-        if (! attributeValue.equals("")) {
+        if (!attributeValue.equals("")) {
             try {
                 returnNote.setSampleStartTime(
                         Double.valueOf(attributeValue).doubleValue());
             } catch (NumberFormatException e) {
                 throw new ConversionException(
                         "Invalid attribute value: " + attributeValue + ".  The "
-                        + "attribute '" + xmlStyle.getSampleStartTimeAttributeName() + "' of "
-                        + "element '" + xmlStyle.getNoteTagName() + "' must represent a "
-                        + "Java double.");
+                                + "attribute '" + xmlStyle.getSampleStartTimeAttributeName() + "' of "
+                                + "element '" + xmlStyle.getNoteTagName() + "' must represent a "
+                                + "Java double."
+                );
             }
         }
         return returnNote;
     }
 
 
-    private static Element[] xmlStringToElements(final String string) 
+    private static Element[] xmlStringToElements(final String string)
             throws
-                ConversionException {
+            ConversionException {
         Vector elementsToBeReturned = new Vector();
         XMLStyle xmlStyle = new StandardXMLStyle();
         char[][] ENCODINGS_ARRAY = xmlStyle.getEncodingsOfValueReferenceChars();
@@ -1083,12 +1154,14 @@ class XMLParser {
                     if (character == '/') {
                         throw new ConversionException(
                                 "Illegal character '/' in attribute name of "
-                                + "the '" + element.getName() + "' element.");
+                                        + "the '" + element.getName() + "' element."
+                        );
                     }
                     if (character == '>') {
                         throw new ConversionException(
                                 "Illegal character '>' in attribute name of "
-                                + "the '" + element.getName() + "' element.");
+                                        + "the '" + element.getName() + "' element."
+                        );
                     }
                     attributeName.append(character);
                     character = string.charAt(count++);
@@ -1098,9 +1171,10 @@ class XMLParser {
                 if (character != '"') {
                     throw new ConversionException(
                             "The value of the '" + attribute.getName()
-                            + "' attribute in the '" + element.getName()
-                            + "' element does not begin with a double-quote "
-                            + "(\").");
+                                    + "' attribute in the '" + element.getName()
+                                    + "' element does not begin with a double-quote "
+                                    + "(\")."
+                    );
                 }
                 StringBuffer valueBuffer = new StringBuffer();
                 character = string.charAt(count++);
@@ -1123,29 +1197,30 @@ class XMLParser {
 //                                + attribute.getName() + "' attribute name in "
 //                                + "the '" + element.getName() + "' element.");
 //                    }
-                    loop: for (int i = 0; i < ENCODINGS_ARRAY.length; i++) {
+                    loop:
+                    for (int i = 0; i < ENCODINGS_ARRAY.length; i++) {
                         for (int j = 0; j < ENCODINGS_ARRAY[i].length; j++) {
                             try {
-                                 if (ENCODINGS_ARRAY[i][j] != 
-                                                string.charAt(count + j - 1)) {
-                                        // if this is last array
-                                        if (i == ENCODINGS_ARRAY.length - 1) {
-                                                valueBuffer.append(character);
-                                        }
-                                        continue loop;
-                                 }
-                                 // if this is last character
-                                 if (j == ENCODINGS_ARRAY[i].length - 1) {
-                                        count += ENCODINGS_ARRAY[i].length - 1;
-                                        valueBuffer.append(REFERENCE_CHARS[i]);
-                                        break loop;
-                                 }
-                            } catch (final IndexOutOfBoundsException e) {
+                                if (ENCODINGS_ARRAY[i][j] !=
+                                        string.charAt(count + j - 1)) {
                                     // if this is last array
                                     if (i == ENCODINGS_ARRAY.length - 1) {
-                                            valueBuffer.append(character);
+                                        valueBuffer.append(character);
                                     }
                                     continue loop;
+                                }
+                                // if this is last character
+                                if (j == ENCODINGS_ARRAY[i].length - 1) {
+                                    count += ENCODINGS_ARRAY[i].length - 1;
+                                    valueBuffer.append(REFERENCE_CHARS[i]);
+                                    break loop;
+                                }
+                            } catch (final IndexOutOfBoundsException e) {
+                                // if this is last array
+                                if (i == ENCODINGS_ARRAY.length - 1) {
+                                    valueBuffer.append(character);
+                                }
+                                continue loop;
                             }
                         }
                     }
@@ -1169,14 +1244,16 @@ class XMLParser {
                 if (character != '>') {
                     throw new ConversionException(
                             "Character '>' is expected to terminate the '"
-                            + element.getName() + "' element but was not "
-                            + "found.");
+                                    + element.getName() + "' element but was not "
+                                    + "found."
+                    );
                 }
             } else {
                 throw new ConversionException(
                         "Either '>' or '/>' is expected to terminate the '"
-                        + element.getName() + "' element but neither was "
-                        + "found.");
+                                + element.getName() + "' element but neither was "
+                                + "found."
+                );
             }
             elementsToBeReturned.addElement(element);
             if (count < string.length()) {
@@ -1193,13 +1270,14 @@ class XMLParser {
         } catch (IndexOutOfBoundsException e) {
             throw new ConversionException(
                     "Xml string ended prematurely.  Further characters were "
-                    + "excepted.");
+                            + "excepted."
+            );
         }
     }
 }
 
 class XMLStyles {
-    public static final XMLStyle[] styles = { new StandardXMLStyle() };
+    public static final XMLStyle[] styles = {new StandardXMLStyle()};
 //            { new ExcessiveURLEncodingXMLStyle(),
 //              new ConciseQueryStringXMLStyle() };
 
@@ -1243,7 +1321,7 @@ class XMLStyles {
         for (int i = 0; i < styles.length; i++) {
             String string =
                     element.getAttribute(styles[i].getTitleAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1254,7 +1332,7 @@ class XMLStyles {
         for (int i = 0; i < styles.length; i++) {
             String string =
                     element.getAttribute(styles[i].getTempoAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1266,7 +1344,7 @@ class XMLStyles {
             String string =
                     element.getAttribute(
                             styles[i].getKeySignatureAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1278,7 +1356,7 @@ class XMLStyles {
             String string =
                     element.getAttribute(
                             styles[i].getKeyQualityAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1289,7 +1367,7 @@ class XMLStyles {
         for (int i = 0; i < styles.length; i++) {
             String string =
                     element.getAttribute(styles[i].getNumeratorAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1300,7 +1378,7 @@ class XMLStyles {
         for (int i = 0; i < styles.length; i++) {
             String string =
                     element.getAttribute(styles[i].getDenominatorAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1311,7 +1389,7 @@ class XMLStyles {
         for (int i = 0; i < styles.length; i++) {
             String string =
                     element.getAttribute(styles[i].getChannelAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1323,7 +1401,7 @@ class XMLStyles {
             String string =
                     element.getAttribute(
                             styles[i].getInstrumentAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1335,7 +1413,7 @@ class XMLStyles {
             String string =
                     element.getAttribute(
                             styles[i].getPanAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1347,7 +1425,7 @@ class XMLStyles {
             String string =
                     element.getAttribute(
                             styles[i].getStartTimeAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1359,7 +1437,7 @@ class XMLStyles {
             String string =
                     element.getAttribute(
                             styles[i].getAppendAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1371,32 +1449,32 @@ class XMLStyles {
             String string =
                     element.getAttribute(
                             styles[i].getPitchAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
         return "";
     }
 
-	public static String getFrequencyAttributeValue(final Element element) {
+    public static String getFrequencyAttributeValue(final Element element) {
         for (int i = 0; i < styles.length; i++) {
             String string =
-			element.getAttribute(
-						styles[i].getFrequencyAttributeName());
-            if (! string.equals("")) {
+                    element.getAttribute(
+                            styles[i].getFrequencyAttributeName());
+            if (!string.equals("")) {
                 return string;
             }
         }
         return "";
     }
-	
+
 
     public static String getDynamicAttributeValue(final Element element) {
         for (int i = 0; i < styles.length; i++) {
             String string =
                     element.getAttribute(
                             styles[i].getDynamicAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1408,7 +1486,7 @@ class XMLStyles {
             String string =
                     element.getAttribute(
                             styles[i].getRhythmValueAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1420,7 +1498,7 @@ class XMLStyles {
             String string =
                     element.getAttribute(
                             styles[i].getDurationAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1432,7 +1510,7 @@ class XMLStyles {
             String string =
                     element.getAttribute(
                             styles[i].getOffsetAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
@@ -1440,19 +1518,19 @@ class XMLStyles {
     }
 
     public static String getSampleStartTimeAttributeValue(
-                final Element element) {
+            final Element element) {
         for (int i = 0; i < styles.length; i++) {
             String string =
                     element.getAttribute(
                             styles[i].getSampleStartTimeAttributeName());
-            if (! string.equals("")) {
+            if (!string.equals("")) {
                 return string;
             }
         }
         return "";
     }
 
-}                          
+}
 
 class Element {
 
@@ -1472,7 +1550,7 @@ class Element {
 
     public void appendChildren(Element[] children) {
         for (int i = 0; i < children.length; i++) {
-            childrenVector.addElement(children[i]);    
+            childrenVector.addElement(children[i]);
         }
     }
 
@@ -1512,17 +1590,36 @@ class Attribute {
         return name;
     }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-
     public String getValue() {
         return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }
 
 abstract class XMLStyle {
-    
+
+    final char[] WHITESPACE_CHARS =
+            new char[]{'%', '2', '0'};
+    final char[] DOUBLE_QUOTE_CHARS =
+            new char[]{'%', '2', '2'};
+    final char[] HASH_CHARS =
+            new char[]{'%', '2', '3'};
+    final char[] AMPERSAND_CHARS =
+            new char[]{'%', '2', '6'};
+    final char[] SLASH_CHARS =
+            new char[]{'%', '2', 'F'};
+    final char[] SEMICOLON_CHARS =
+            new char[]{'%', '3', 'B'};
+    final char[] QUESTION_MARK_CHARS =
+            new char[]{'%', '3', 'F'};
+    final char[] LEFT_ANGLE_CHARS =
+            new char[]{'%', '3', 'C'};
+    final char[] RIGHT_ANGLE_CHARS =
+            new char[]{'%', '3', 'E'};
+
     public String initialXMLDeclaration() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     }
@@ -1546,7 +1643,7 @@ abstract class XMLStyle {
     public String getAmpersand() {
         return "&"; //"%26amp%3B";
     }
-    
+
     public String getAmpersandInString() {
         return "&amp;";
     }
@@ -1562,33 +1659,6 @@ abstract class XMLStyle {
     public String getQuestionMark() {
         return "?"; //"%3F";
     }
-
-    final char[] WHITESPACE_CHARS =
-            new char[] { '%', '2', '0' };
-
-    final char[] DOUBLE_QUOTE_CHARS =
-            new char[] { '%', '2', '2' };
-
-    final char[] HASH_CHARS =
-            new char[] { '%', '2', '3' };
-
-    final char[] AMPERSAND_CHARS =
-            new char[] { '%', '2', '6' };
-
-    final char[] SLASH_CHARS =
-            new char[] { '%', '2', 'F' };
-
-    final char[] SEMICOLON_CHARS =
-            new char[] { '%', '3', 'B' };
-
-    final char[] QUESTION_MARK_CHARS =
-            new char[] { '%', '3', 'F' };
-
-    final char[] LEFT_ANGLE_CHARS =
-            new char[] { '%', '3', 'C' };
-
-    final char[] RIGHT_ANGLE_CHARS =
-            new char[] { '%', '3', 'E' };
 
     public abstract char[] getReferenceChars();
 
@@ -1678,12 +1748,12 @@ abstract class XMLStyle {
         return "pitch";
     }
 
-	public String getFrequencyAttributeName() {
+    public String getFrequencyAttributeName() {
         return "frequency";
     }
 
     public String getDynamicAttributeName() {
-        return "dynamic";                       
+        return "dynamic";
     }
 
     public String getRhythmValueAttributeName() {
@@ -1708,29 +1778,25 @@ abstract class XMLStyle {
 }
 
 class StandardXMLStyle extends XMLStyle {
-    
-    public final char[] getReferenceChars()
-    {
-            return new char[] { };
+
+    public final char[] getReferenceChars() {
+        return new char[]{};
     }
 
-    public final char[][] getEncodingsOfReferenceChars()
-    {
-            return new char[][] { };
-    }
-    
-    public final char[] getValueReferenceChars()
-    {
-            return new char[] { '<', '>', '\"', '&' };
+    public final char[][] getEncodingsOfReferenceChars() {
+        return new char[][]{};
     }
 
-    public final char[][] getEncodingsOfValueReferenceChars()
-    {
-            return new char[][] { { '&', 'l', 't', ';' },
-                                  { '&', 'g', 't', ';' },
-                                  { '&', 'q', 'u', 'o', 't', ';' },
-                                  { '&', 'a', 'm', 'p', ';' } 
-                                };
+    public final char[] getValueReferenceChars() {
+        return new char[]{'<', '>', '\"', '&'};
+    }
+
+    public final char[][] getEncodingsOfValueReferenceChars() {
+        return new char[][]{{'&', 'l', 't', ';'},
+                {'&', 'g', 't', ';'},
+                {'&', 'q', 'u', 'o', 't', ';'},
+                {'&', 'a', 'm', 'p', ';'}
+        };
     }
 
 }

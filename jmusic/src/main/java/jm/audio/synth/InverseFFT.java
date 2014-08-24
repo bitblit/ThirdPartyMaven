@@ -22,40 +22,40 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.audio.synth;
 
-import java.io.IOException;
-import jm.audio.AudioObject;
 import jm.audio.AOException;
-import jm.music.data.Note;
-import jm.audio.math.*;
+import jm.audio.AudioObject;
+import jm.audio.math.RealFloatFFT_Radix2;
 
 /**
  * An inverse FFT from frq to time.
- * 
+ *
  * @author Andrew Sorensen
- * @version 1.0,Sun Feb 25 18:42:46  2001
+ * @version 1.0, Sun Feb 25 18:42:46  2001
  */
 
-public final class InverseFFT extends AudioObject{
-	//----------------------------------------------
-	// Constructors
-	//----------------------------------------------
-	/**
-	 *
-	 */
-	public InverseFFT(AudioObject ao){
-		super(ao, "[InverseFFT]");
-	}
+public final class InverseFFT extends AudioObject {
+    //----------------------------------------------
+    // Constructors
+    //----------------------------------------------
 
-	//----------------------------------------------
-	// Methods
-	//----------------------------------------------
-	/**
-	 *
-	 */
-	public int work(float[] buffer)throws AOException{
-		int returned = this.previous[0].nextWork(buffer);
-		RealFloatFFT_Radix2 fft=new RealFloatFFT_Radix2(returned);
-		fft.inverse(buffer);
-		return returned;
-	}
+    /**
+     *
+     */
+    public InverseFFT(AudioObject ao) {
+        super(ao, "[InverseFFT]");
+    }
+
+    //----------------------------------------------
+    // Methods
+    //----------------------------------------------
+
+    /**
+     *
+     */
+    public int work(float[] buffer) throws AOException {
+        int returned = this.previous[0].nextWork(buffer);
+        RealFloatFFT_Radix2 fft = new RealFloatFFT_Radix2(returned);
+        fft.inverse(buffer);
+        return returned;
+    }
 }

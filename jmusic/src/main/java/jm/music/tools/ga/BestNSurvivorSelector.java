@@ -26,7 +26,7 @@ package jm.music.tools.ga;
 import jm.music.data.Phrase;
 
 /**
- * @author  Adam Kirby
+ * @author Adam Kirby
  * @version 0.1.1, 11th December 2000
  */
 public class BestNSurvivorSelector extends SurvivorSelector {
@@ -34,7 +34,7 @@ public class BestNSurvivorSelector extends SurvivorSelector {
     }
 
     public Phrase[] selectSurvivors(Phrase[] population,
-            double[] fitness, Phrase parents[], double[] parentsFitness) {
+                                    double[] fitness, Phrase parents[], double[] parentsFitness) {
         Phrase[] returnPopulation = new Phrase[population.length];
         double[] combinedFitness = new double[fitness.length + parentsFitness.length];
         for (int i = 0; i < fitness.length; i++) {

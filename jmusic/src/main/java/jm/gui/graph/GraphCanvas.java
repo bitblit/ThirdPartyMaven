@@ -23,14 +23,11 @@
 
 package jm.gui.graph;
 
-import java.awt.Canvas;
-import java.awt.Image;
-import java.awt.Graphics;
-import java.awt.Dimension;
+import java.awt.*;
 
 /**
- * @author  Adam Kirby
- * @version 1.0,Sun Feb 25 18:43
+ * @author Adam Kirby
+ * @version 1.0, Sun Feb 25 18:43
  */
 public abstract class GraphCanvas extends Canvas {
     protected StatisticsList statsList;
@@ -44,7 +41,7 @@ public abstract class GraphCanvas extends Canvas {
     protected Dimension minimumSize = new Dimension(1, 1);
 
     public GraphCanvas() {
-        this(new Statistics());        
+        this(new Statistics());
     }
 
     public GraphCanvas(Statistics stats) {

@@ -22,62 +22,66 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.audio.synth;
 
-import java.awt.*;
-
-/* 
+/*
 * The mass class for a spring mass netwwork
 * @author Andrew Brown
 */
 
 public class MassObject {
-	/* weight of the mass */
+    /* weight of the mass */
     private double massSize = 1.0;
-	/* reduce the amplitude over time */ 
-    private double friction = 0.000003; 
-    /** remember the previous force */
+    /* reduce the amplitude over time */
+    private double friction = 0.000003;
+    /**
+     * remember the previous force
+     */
     private double inertia = 0.0;
     /* the number of time intervals since the last calulation */
     private double deltaTime = 1.0;
     /* the virtical pixel position of this mass */
     private double yPosition;
-    
+
     //////////////////
     // constructors
     /////////////////
     public MassObject() {
-            this(1.0);
+        this(1.0);
     }
-    
+
     public MassObject(double friction) {
-            this(friction, 1.0);
+        this(friction, 1.0);
     }
-    
+
     public MassObject(double friction, double size) {
-            this.massSize = size;
-            this.friction = friction;
+        this.massSize = size;
+        this.friction = friction;
     }
-	
-    /** specify the virtical pixel location for the top of this mass */
-    public void setYPosition(double newPos) {
-        this.yPosition = newPos;
-    }
-    
-    /** return the virtical pixel location of the top of this mass */
+
+    /**
+     * return the virtical pixel location of the top of this mass
+     */
     public double getYPosition() {
         return this.yPosition;
     }
-	
+
+    /**
+     * specify the virtical pixel location for the top of this mass
+     */
+    public void setYPosition(double newPos) {
+        this.yPosition = newPos;
+    }
+
     public double getDisplacement(double force) {
         force += inertia; // add feedback loop to maintain momentum
-        if ((inertia < 0.0 && friction > 0.0) ||  (inertia > 0.0 && friction < 0.0) ) {
-        	friction = friction * -1;
-        } 
+        if ((inertia < 0.0 && friction > 0.0) || (inertia > 0.0 && friction < 0.0)) {
+            friction = friction * -1;
+        }
         if (Math.abs(friction) > Math.abs(force)) {
-         	inertia = 0.0;
+            inertia = 0.0;
         } else inertia = force - friction; // original math
-        double accel = force/massSize;
+        double accel = force / massSize;
         double displacement = accel / (deltaTime * deltaTime);
-        
+
         return displacement;
     }
 }

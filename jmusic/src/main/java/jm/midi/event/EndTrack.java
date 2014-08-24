@@ -26,67 +26,77 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-/**************************************************************
-@author Andrew Sorensen
-***************************************************************/
+/**
+ * ***********************************************************
+ *
+ * @author Andrew Sorensen
+ *         *************************************************************
+ */
 
-public final class EndTrack implements Event{
-	private final short id;
-	private int time;
+public final class EndTrack implements Event {
+    private final short id;
+    private int time;
 
-	//------------------------------------------
-	//Constructors
-	/**Default Constructor*/
-	public EndTrack(){
-		this.id = 23;
-		this.time = 0;
-	}
+    //------------------------------------------
+    //Constructors
 
-	//-----------------------------------------------
-	//time
-	public int getTime(){	
-		return time;
-	}
-	public void setTime(int time){
-		this.time = time;
-	}
-	//----------------------------------------------
-	//Return Id
-	public short getID(){
-		return id;
-	}
+    /**
+     * Default Constructor
+     */
+    public EndTrack() {
+        this.id = 23;
+        this.time = 0;
+    }
 
-        //---------------------------------------------- 
-	// Write the contents of this object out to disk 
-	//---------------------------------------------- 
-	public int write(DataOutputStream dos) throws IOException{ 
-		int bytes_out = jm.midi.MidiUtil.writeVarLength(this.time,dos);
-		dos.writeByte((byte)0xFF); //META Event Type
-		dos.writeByte((byte)0x2F); //TempoEvent Event Type
-		dos.writeByte((byte)0x00);
-		//bytes_out += jm.midi.MidiUtil.writeVarLength(0,dos);
-		return bytes_out + 2;
-	} 
-	
-	//----------------------------------------------
-	// Read the contends of this objec in from disk
-	public int read(DataInputStream dis) throws IOException{
-		return 0;
-	}
+    //-----------------------------------------------
+    //time
+    public int getTime() {
+        return time;
+    }
 
-	//Copy Object
-	public Event copy() throws CloneNotSupportedException{
-		TempoEvent event;
-		try{
-			event = (TempoEvent) this.clone();
-		}catch(CloneNotSupportedException e){
-			System.out.println(e);
-			event = new TempoEvent();
-		}
-		return event;
-	}
-	//---------------------------------------------------
-	//Print
-	public void print(){
-		System.out.println("EndTrack(023):             [time = " + this.time+"]"); }
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    //----------------------------------------------
+    //Return Id
+    public short getID() {
+        return id;
+    }
+
+    //----------------------------------------------
+    // Write the contents of this object out to disk
+    //----------------------------------------------
+    public int write(DataOutputStream dos) throws IOException {
+        int bytes_out = jm.midi.MidiUtil.writeVarLength(this.time, dos);
+        dos.writeByte((byte) 0xFF); //META Event Type
+        dos.writeByte((byte) 0x2F); //TempoEvent Event Type
+        dos.writeByte((byte) 0x00);
+        //bytes_out += jm.midi.MidiUtil.writeVarLength(0,dos);
+        return bytes_out + 2;
+    }
+
+    //----------------------------------------------
+    // Read the contends of this objec in from disk
+    public int read(DataInputStream dis) throws IOException {
+        return 0;
+    }
+
+    //Copy Object
+    public Event copy() throws CloneNotSupportedException {
+        TempoEvent event;
+        try {
+            event = (TempoEvent) this.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println(e);
+            event = new TempoEvent();
+        }
+        return event;
+    }
+
+    //---------------------------------------------------
+    //Print
+    public void print() {
+        System.out.println("EndTrack(023):             [time = " + this.time + "]");
+    }
 }

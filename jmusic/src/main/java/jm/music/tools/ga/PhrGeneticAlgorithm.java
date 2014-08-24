@@ -43,7 +43,7 @@ public class PhrGeneticAlgorithm {
     protected ParentSelector parentSelector;
 
     protected Recombiner recombiner;
-                                 
+
     protected Mutater mutater;
 
     protected SurvivorSelector survivorSelector;
@@ -67,12 +67,12 @@ public class PhrGeneticAlgorithm {
                                Recombiner recombiner,
                                Mutater mutater,
                                SurvivorSelector survivorSelector) {
-        
+
         this.beatsPerBar = beatsPerBar;
         initialLength = phrase.getEndTime();
         initialSize = phrase.size();
         originalSize = initialSize;
-        
+
         this.populationInitialiser = populationInitialiser;
         this.fitnessEvaluater = fitnessEvaluater;
         this.terminationCriteria = terminationCriteria;
@@ -80,26 +80,30 @@ public class PhrGeneticAlgorithm {
         this.recombiner = recombiner;
         this.mutater = mutater;
         this.survivorSelector = survivorSelector;
-        
+
         setUpNewPopulation(phrase);
-        
+
     }
-    
+
+    private static int rand(final int left, final int right) {
+        return left + (int) (Math.random() * (right - left)) + 1;
+    }
+
     public void setUpNewPopulation(Phrase phrase) {
         iteration = 0;
         population = populationInitialiser.initPopulation(phrase, beatsPerBar);
         fitness = fitnessEvaluater.evaluate(population);
     }
-    
+
     public void setBeatsPerBar(int beats) {
         this.beatsPerBar = beats;
     }
-    
+
     public void zeroInitialSize() {
         this.originalSize = this.initialSize;
         this.initialSize = 0;
     }
-    
+
     public void restoreInitialSize() {
         this.initialSize = this.originalSize;
     }
@@ -107,37 +111,37 @@ public class PhrGeneticAlgorithm {
     public long getIteration() {
         return iteration;
     }
-    
+
     /**
-    * Evolve the population through one generation.
+     * Evolve the population through one generation.
      */
     public boolean iterate() {
         finished = terminationCriteria.isFinished(population);
         if (!finished) {
             iteration++;
-            
+
             Phrase[] parents = parentSelector.selectParents(population, fitness);
             Phrase[] recombined = recombiner.recombine(
-                            parents, fitness, initialLength, initialSize, beatsPerBar);
+                    parents, fitness, initialLength, initialSize, beatsPerBar);
             Phrase[] children = mutater.mutate(recombined, initialLength, initialSize, beatsPerBar);
-                    
+
             double[] parentsFitness = fitnessEvaluater.evaluate(children);
             population = survivorSelector.selectSurvivors(
                     population, fitness, children,
                     parentsFitness);
             fitness = fitnessEvaluater.evaluate(population);
-            
+
             return true;
         } else {
             return false;
         }
     }
-    
+
     /**
-    * Evolve the population through the specified number of generations.
+     * Evolve the population through the specified number of generations.
      */
     public long iterate(long iterations) {
-        
+
         long iterationsProcessed = iterations;
         for (int i = 0; i < iterations; i++) {
             iterate();
@@ -187,10 +191,6 @@ public class PhrGeneticAlgorithm {
         quicksort(last + 1, right);
     }
 
-    private static int rand(final int left, final int right) {
-        return left + (int) (Math.random() * (right - left)) + 1;
-    }
-
     private void swap(final int i, final int j) {
         Phrase tempPhrase = population[i];
         population[i] = population[j];
@@ -224,7 +224,7 @@ public class PhrGeneticAlgorithm {
     public double getStandardDeviation() {
         double avgFitness = getAverageFitness();
         double stDevCount = 0.0;
-        for (int i = 0; i < fitness.length; i++) {  
+        for (int i = 0; i < fitness.length; i++) {
             stDevCount += (avgFitness - fitness[i]) * (avgFitness - fitness[i]);
         }
         return Math.sqrt(stDevCount) / fitness.length;
@@ -241,7 +241,7 @@ public class PhrGeneticAlgorithm {
         }
         return population[index];
     }
-    
+
     public Mutater getMutater() {
         return mutater;
     }

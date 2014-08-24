@@ -25,51 +25,21 @@ package jm.music.tools;
 
 import jm.music.data.Note;
 import jm.music.data.Phrase;
-import java.util.Vector;
-import java.util.Enumeration;
-import java.util.Hashtable;
 
 /**
- *
- * @author  Adam Kirby
- * @version 1.0,Sun Feb 25 18:43:35  2001
- *
- * @since   jMusic February 2000 Release
+ * @author Adam Kirby
+ * @version 1.0, Sun Feb 25 18:43:35  2001
+ * @since jMusic February 2000 Release
  */
 public final class ChordAnalysis {
     public static final int[] RATINGS = {1, 4, 4, 3, 2, 5, 7};
-
-    // previously called PossibleChords
-    private static class Possible {
-        int[] chords = null;
-
-        Possible() {
-        }
-
-        Possible(int[] chords) {
-            this.chords = chords;
-        }
-        
-        int getBestChord() {
-            if (chords == null) {
-                return -1;
-            }
-
-            int currentBest = 6;
-            for (int i = 0; i < chords.length; i++) {
-                if (RATINGS[chords[i]] < RATINGS[currentBest]) {
-                    currentBest = chords[i];
-                }
-            }
-            return currentBest;
-        }
-    }
 
     /**
      * This class is not meant to be instantiated, as it contains only class
      * members.
      */
-    private ChordAnalysis () {}
+    private ChordAnalysis() {
+    }
 
     /**
      */
@@ -101,7 +71,8 @@ public final class ChordAnalysis {
                 new Possible[(int) Math.ceil(endTime / beatLength)];
 
         int i = 0;
-        beatLoop: for (i = 0; i < chords.length; i++) {
+        beatLoop:
+        for (i = 0; i < chords.length; i++) {
             if (rvCount == i * beatLength) {
                 downBeat = phrase.getNote(noteCount);
             } else {
@@ -129,7 +100,7 @@ public final class ChordAnalysis {
                 if (noteCount >= size) {
                     break beatLoop;
                 }
-            }                         
+            }
 
             chords[i] = firstPass(downBeat, halfBeat, tonic, scale, triads);
         }
@@ -175,7 +146,8 @@ public final class ChordAnalysis {
         returnChords[index] = chords[index].getBestChord();
         int previousChord = returnChords[index];
         index--;
-        outerLoop: while (index > 0) {
+        outerLoop:
+        while (index > 0) {
             while (chords[index] == null) {
                 returnChords[index] = 7;
                 index--;
@@ -185,7 +157,7 @@ public final class ChordAnalysis {
             }
             int dominantIndex = (previousChord + 4) % scale.length;
             if (acceptableChange(chords[index].chords, dominantIndex,
-                                 chords[index].getBestChord())) {
+                    chords[index].getBestChord())) {
                 returnChords[index] = dominantIndex;
             } else {
                 returnChords[index] = chords[index].getBestChord();
@@ -228,13 +200,13 @@ public final class ChordAnalysis {
                 return firstPassChords(downBeat, tonic, scale, triads);
             } else {
                 if (PhraseAnalysis.pitchToDegree(downBeat.getPitch(),
-                                                 tonic)
+                        tonic)
                         == PhraseAnalysis.pitchToDegree(halfBeat.getPitch(),
-                                                        tonic)) {
+                        tonic)) {
                     return firstPassChords(downBeat, tonic, scale, triads);
                 } else {
                     return firstPassChords(downBeat, halfBeat, tonic, scale,
-                                              triads);
+                            triads);
                 }
             }
         }
@@ -242,7 +214,7 @@ public final class ChordAnalysis {
 
     private static boolean isBad(final Note note, final int tonic,
                                  final int[] scale) {
-        if (note  == null) {
+        if (note == null) {
             return true;
         }
 
@@ -259,7 +231,7 @@ public final class ChordAnalysis {
 
     private static Possible firstPassChords(final Note note,
                                             final int tonic,
-                                            final int[] scale,      
+                                            final int[] scale,
                                             final int[][] triads) {
         Possible returnChords = new Possible(new int[3]);
         int index = 0;
@@ -269,7 +241,7 @@ public final class ChordAnalysis {
                 returnChords.chords[index++] = i;
             }
         }
-        return returnChords;   
+        return returnChords;
     }
 
     private static Possible firstPassChords(final Note note1,
@@ -296,7 +268,7 @@ public final class ChordAnalysis {
     }
 
     private static Possible findCommonChords(final int[] firstChords,
-                                                   final int[] secondChords) {
+                                             final int[] secondChords) {
         Possible returnChords = new Possible(new int[2]);
         int index = 0;
         for (int i = 0; i < firstChords.length; i++) {
@@ -316,5 +288,31 @@ public final class ChordAnalysis {
             return new Possible(value);
         }
         throw new Error("Unexpected value for index");
+    }
+
+    // previously called PossibleChords
+    private static class Possible {
+        int[] chords = null;
+
+        Possible() {
+        }
+
+        Possible(int[] chords) {
+            this.chords = chords;
+        }
+
+        int getBestChord() {
+            if (chords == null) {
+                return -1;
+            }
+
+            int currentBest = 6;
+            for (int i = 0; i < chords.length; i++) {
+                if (RATINGS[chords[i]] < RATINGS[currentBest]) {
+                    currentBest = chords[i];
+                }
+            }
+            return currentBest;
+        }
     }
 }

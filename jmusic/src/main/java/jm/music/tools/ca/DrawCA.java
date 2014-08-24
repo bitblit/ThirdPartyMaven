@@ -6,11 +6,7 @@
 */
 package jm.music.tools.ca;
 
-import java.awt.*;
-import java.awt.event.*;
-
-public class DrawCA
-{
+public class DrawCA {
     /**
      * Note from CWeiss - so this class doesn't compile in the original source distribution due to the missing
      * AutomataMusic class - I'm commenting it out here as its kinda a corner case (or appears to be!) but happy

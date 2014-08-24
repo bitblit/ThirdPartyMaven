@@ -22,10 +22,9 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 package jm.music.tools;
 
-import java.util.Vector;
-import jm.music.data.Phrase;
-import jm.music.data.Note;
 import jm.JMC;
+import jm.music.data.Note;
+import jm.music.data.Phrase;
 
 /**
  * The PhraseMatrix class holds AdaptiveArrays for each Note parameter
@@ -33,168 +32,166 @@ import jm.JMC;
  * between Note types and the AdaptiveMatrix
  *
  * @author Andrew Sorensen
- * @version 1.0,Sun Feb 25 18:43:52  2001
+ * @version 1.0, Sun Feb 25 18:43:52  2001
  */
-public final class PhraseMatrix implements JMC{
-	//-------------------------------------------------
-	// Attributes
-	//-------------------------------------------------
-	/**
-	 * The matrix associated with pitch data
-	 */
-	private AdaptiveMatrix pitchAM;
+public final class PhraseMatrix implements JMC {
+    //-------------------------------------------------
+    // Attributes
+    //-------------------------------------------------
+    /**
+     * A map from rhythm values to AdaptiveMatrix index
+     * values.
+     */
+    private final double[] rhythmMap = {SB, MD, M, C, CT, CD, Q, QD, QT, SQ, DSQ};
+    /**
+     * The matrix associated with pitch data
+     */
+    private AdaptiveMatrix pitchAM;
+    /**
+     * The matrix associated with rhythm data
+     */
+    private AdaptiveMatrix rhythmAM;
+    /**
+     * The matrix associated with dynamic
+     */
+    private AdaptiveMatrix dynamicAM;
+    /**
+     * The depth to make the pitch adaptive matrix's
+     */
+    private int pitchDepth;
+    /**
+     * The depth to make the rhythm adaptive matrix's
+     */
+    private int rhythmDepth;
+    /**
+     * The depth to make the pitch adaptive matrix's
+     */
+    private int dynamicDepth;
+    /**
+     * The array of notes associated with the original
+     * phrase.  This information is kept so that we
+     * can generate new notes while still keeping any
+     * of the phrases original note attributes.
+     */
+    private Note[] notes;
 
-	/**
-	 * The matrix associated with rhythm data
-	 */
-	private AdaptiveMatrix rhythmAM;
+    //--------------------------------------------------
+    // Constructors
+    //--------------------------------------------------
 
-	/**
-	 * The matrix associated with dynamic
-	 */
-	private AdaptiveMatrix dynamicAM;
+    /**
+     * Takes a phrase as input and creates matrix's for
+     * pitch, rhythm and dynamic from the phrase's notes
+     * at the specifed depth.
+     */
+    public PhraseMatrix(Phrase phrase, int depth) {
+        this(phrase, depth, depth, depth);
+    }
 
-	/**
-	 * The depth to make the pitch adaptive matrix's
-	 */
-	private int pitchDepth;
-        /**
-	 * The depth to make the rhythm adaptive matrix's
-	 */
-	private int rhythmDepth;
-        /**
-	 * The depth to make the pitch adaptive matrix's
-	 */
-	private int dynamicDepth;
+    /**
+     * Takes a phrase as input and creates matrix's for
+     * pitch, rhythm and dynamic from the phrase's notes
+     * at different depths of each attribute.
+     */
+    public PhraseMatrix(Phrase phrase, int pDepth, int rDepth, int dDepth) {
+        this.pitchDepth = pDepth;
+        this.rhythmDepth = rDepth;
+        this.dynamicDepth = dDepth;
+        this.notes = phrase.getNoteArray();
+        calcPitch();
+        calcRhythm();
+        calcDynamic();
+    }
 
+    //--------------------------------------------------
+    // Public Methods
+    //--------------------------------------------------
 
-	/**
-	 * The array of notes associated with the original 
-	 * phrase.  This information is kept so that we
-	 * can generate new notes while still keeping any
-	 * of the phrases original note attributes.
-	 */
-	private Note[] notes;
-
-	/**
- 	* A map from rhythm values to AdaptiveMatrix index 
- 	* values.
- 	*/
- 	private final double[] rhythmMap = {SB, MD, M, C, CT, CD, Q, QD, QT, SQ, DSQ};
-
-	//--------------------------------------------------
-	// Constructors
-	//--------------------------------------------------
-	/**
-	 * Takes a phrase as input and creates matrix's for
-	 * pitch, rhythm and dynamic from the phrase's notes
-         * at the specifed depth.
-	 */
-	public PhraseMatrix(Phrase phrase, int depth){
-            this(phrase, depth, depth, depth);
+    /**
+     * calculates a pitch based adaptive matrix from
+     * the phrases note array
+     */
+    public void calcPitch() {
+        int[] numArray = new int[notes.length];
+        for (int i = 0; i < notes.length; i++) {
+            numArray[i] = notes[i].getPitch();
         }
-        
-        /**
-	 * Takes a phrase as input and creates matrix's for
-	 * pitch, rhythm and dynamic from the phrase's notes
-         * at different depths of each attribute.
-	 */
-	public PhraseMatrix(Phrase phrase, int pDepth, int rDepth, int dDepth){
-		this.pitchDepth = pDepth;
-                this.rhythmDepth = rDepth;
-                this.dynamicDepth = dDepth;
-		this.notes = phrase.getNoteArray();	
-		calcPitch();
-		calcRhythm();
-		calcDynamic();
-	}
+        pitchAM = new AdaptiveMatrix(numArray, this.pitchDepth, 127);
+    }
 
-	//--------------------------------------------------
-	// Public Methods
-	//--------------------------------------------------
-	/**
-	 * calculates a pitch based adaptive matrix from
-	 * the phrases note array
-	 */
-	public void calcPitch(){ 
-		int[] numArray = new int[notes.length];
-		for(int i=0;i<notes.length;i++){
-			numArray[i]=notes[i].getPitch();
-		}
-		pitchAM = new AdaptiveMatrix(numArray, this.pitchDepth, 127);
-	}
-
-	/**
-	 * calculates a rhythm based adaptive matrix from
-	 * the phrases note array
-	 */
-	public void calcRhythm(){ 
-		int[] numArray = new int[notes.length];
-		for(int i=0;i<notes.length;i++){
-			boolean flag =  false;
-			for(int j=0;j<rhythmMap.length;j++){
-				if(notes[i].getRhythmValue() == rhythmMap[j]){
-					flag = true;
-					numArray[i] = j;
-					break;
-				}
-			}
-			if(flag == false){
-				System.err.print("[WARNING] PhraseMatrix only supports ");
-				System.err.println("rhythm values supported in the JMC file");
-			}
-		}
-		rhythmAM = new AdaptiveMatrix(numArray, this.rhythmDepth, this.rhythmMap.length);
-	}
+    /**
+     * calculates a rhythm based adaptive matrix from
+     * the phrases note array
+     */
+    public void calcRhythm() {
+        int[] numArray = new int[notes.length];
+        for (int i = 0; i < notes.length; i++) {
+            boolean flag = false;
+            for (int j = 0; j < rhythmMap.length; j++) {
+                if (notes[i].getRhythmValue() == rhythmMap[j]) {
+                    flag = true;
+                    numArray[i] = j;
+                    break;
+                }
+            }
+            if (flag == false) {
+                System.err.print("[WARNING] PhraseMatrix only supports ");
+                System.err.println("rhythm values supported in the JMC file");
+            }
+        }
+        rhythmAM = new AdaptiveMatrix(numArray, this.rhythmDepth, this.rhythmMap.length);
+    }
 
 
-	/**
-	 * calculates a dynamic based adaptive matrix from
-	 * the phrases note array
-	 */
-	public void calcDynamic(){ 
-		int[] numArray = new int[notes.length];
-		for(int i=0;i<notes.length;i++){
-			numArray[i]=notes[i].getDynamic();
-		}
-		dynamicAM = new AdaptiveMatrix(numArray, this.dynamicDepth, 127);
-	}
+    /**
+     * calculates a dynamic based adaptive matrix from
+     * the phrases note array
+     */
+    public void calcDynamic() {
+        int[] numArray = new int[notes.length];
+        for (int i = 0; i < notes.length; i++) {
+            numArray[i] = notes[i].getDynamic();
+        }
+        dynamicAM = new AdaptiveMatrix(numArray, this.dynamicDepth, 127);
+    }
 
-	/**
-	 * Generates a the number of notes requrested using
-	 * a combination of generated note attributes and
-	 * existing note attributes.
-	 * This method works on the existing length of note
-	 * data available from the existing phrase.
-         * @param p boolean consider the pitches or not
-         * @param r boolean consider the rhythmValues or not
-         * @param d boolean consider the dynamics or not
-	 * @return a phrase containing the new note data
-	 */
-	public Phrase generate(boolean p, boolean r, boolean d){
-		return this.generate(p, r, d, this.notes.length);
-	}
+    /**
+     * Generates a the number of notes requrested using
+     * a combination of generated note attributes and
+     * existing note attributes.
+     * This method works on the existing length of note
+     * data available from the existing phrase.
+     *
+     * @param p boolean consider the pitches or not
+     * @param r boolean consider the rhythmValues or not
+     * @param d boolean consider the dynamics or not
+     * @return a phrase containing the new note data
+     */
+    public Phrase generate(boolean p, boolean r, boolean d) {
+        return this.generate(p, r, d, this.notes.length);
+    }
 
-	/**
-	 * Generates a the number of notes requrested using
-	 * a combination of generated note attributes and
-	 * existing note attributes.
-         * @param p boolean consider the pitches or not
-         * @param r boolean consider the rhythmValues or not
-         * @param d boolean consider the dynamics or not
-	 * @return a phrase containing the new note data
-	 */
-	public Phrase generate(boolean p, boolean r, boolean d, int numOfNotes){
-		int[] pitch = new int[this.pitchDepth];
-		int[] rhythm = new int[this.rhythmDepth];
-		int[] dynamic = new int[this.dynamicDepth];
-		//Make an array of default notes as long as required by numOfNotes
-		Note[] noteList = new Note[numOfNotes];
-		for(int i=0;i<numOfNotes;i++){
-			noteList[i] = new Note();
-		}
+    /**
+     * Generates a the number of notes requrested using
+     * a combination of generated note attributes and
+     * existing note attributes.
+     *
+     * @param p boolean consider the pitches or not
+     * @param r boolean consider the rhythmValues or not
+     * @param d boolean consider the dynamics or not
+     * @return a phrase containing the new note data
+     */
+    public Phrase generate(boolean p, boolean r, boolean d, int numOfNotes) {
+        int[] pitch = new int[this.pitchDepth];
+        int[] rhythm = new int[this.rhythmDepth];
+        int[] dynamic = new int[this.dynamicDepth];
+        //Make an array of default notes as long as required by numOfNotes
+        Note[] noteList = new Note[numOfNotes];
+        for (int i = 0; i < numOfNotes; i++) {
+            noteList[i] = new Note();
+        }
                 /*
-		for(int i=0;i<this.depth;i++){
+        for(int i=0;i<this.depth;i++){
 			pitch[i] = notes[i].getPitch();
 			dynamic[i] = notes[i].getDynamic();
 			for(int j=0;j<rhythmMap.length;j++){
@@ -205,50 +202,50 @@ public final class PhraseMatrix implements JMC{
 			}
 		}
                 */
-                // pitch
-		for(int i=0;i<this.pitchDepth;i++){
-			pitch[i] = notes[i].getPitch();
-		}
+        // pitch
+        for (int i = 0; i < this.pitchDepth; i++) {
+            pitch[i] = notes[i].getPitch();
+        }
 
-                // rhythm
-                for(int i=0;i<this.rhythmDepth;i++){
-			for(int j=0;j<rhythmMap.length;j++){
-				if(notes[i].getRhythmValue() == rhythmMap[j]){
-					rhythm[i] = j;
-					break;
-				}
-			}
-		}
-                // dynamic
-                for(int i=0;i<this.dynamicDepth;i++){
-			dynamic[i] = notes[i].getDynamic();
-		}
-                
-		int[] retPitch = pitchAM.generate(numOfNotes, pitch);
-		int[] retDynamic = dynamicAM.generate(numOfNotes, dynamic);
-		int[] retRhythm = rhythmAM.generate(numOfNotes, rhythm);
+        // rhythm
+        for (int i = 0; i < this.rhythmDepth; i++) {
+            for (int j = 0; j < rhythmMap.length; j++) {
+                if (notes[i].getRhythmValue() == rhythmMap[j]) {
+                    rhythm[i] = j;
+                    break;
+                }
+            }
+        }
+        // dynamic
+        for (int i = 0; i < this.dynamicDepth; i++) {
+            dynamic[i] = notes[i].getDynamic();
+        }
 
-		if(p){
-			for(int i=0;i<numOfNotes;i++){
-				noteList[i].setPitch(retPitch[i]);
-			}
-		}
-                if(r){
-			for(int i=0;i<numOfNotes;i++){
-				noteList[i].setRhythmValue(rhythmMap[retRhythm[i]]);
-				noteList[i].setDuration(rhythmMap[retRhythm[i]] * 0.9);
-			}
-		}
-                if(d){
-			for(int i=0;i<numOfNotes;i++){
-				noteList[i].setDynamic(retDynamic[i]);
-			}
-		}
+        int[] retPitch = pitchAM.generate(numOfNotes, pitch);
+        int[] retDynamic = dynamicAM.generate(numOfNotes, dynamic);
+        int[] retRhythm = rhythmAM.generate(numOfNotes, rhythm);
 
-		Phrase phrase = new Phrase();
-		phrase.addNoteList(noteList);
-		return phrase;
-	}
+        if (p) {
+            for (int i = 0; i < numOfNotes; i++) {
+                noteList[i].setPitch(retPitch[i]);
+            }
+        }
+        if (r) {
+            for (int i = 0; i < numOfNotes; i++) {
+                noteList[i].setRhythmValue(rhythmMap[retRhythm[i]]);
+                noteList[i].setDuration(rhythmMap[retRhythm[i]] * 0.9);
+            }
+        }
+        if (d) {
+            for (int i = 0; i < numOfNotes; i++) {
+                noteList[i].setDynamic(retDynamic[i]);
+            }
+        }
+
+        Phrase phrase = new Phrase();
+        phrase.addNoteList(noteList);
+        return phrase;
+    }
 }
 
 //===========================================================================

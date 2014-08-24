@@ -22,11 +22,12 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.constants;
 
-/** An alias for Durations.
-  * 
-  * @see jm.music.data.Note
-  * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
-  */
+/**
+ * An alias for Durations.
+ *
+ * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
+ * @see jm.music.data.Note
+ */
 public interface RhythmValues extends Durations {
-    
+
 }

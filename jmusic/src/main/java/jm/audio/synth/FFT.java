@@ -22,41 +22,41 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.audio.synth;
 
-import java.io.IOException;
-import jm.audio.AudioObject;
 import jm.audio.AOException;
-import jm.music.data.Note;
-import jm.audio.math.*;
+import jm.audio.AudioObject;
+import jm.audio.math.RealFloatFFT_Radix2;
 
 /**
  * An FFT transformation from time to frq.
- * 
+ *
  * @author Andrew Sorensen
- * @version 1.0,Sun Feb 25 18:42:46  2001
+ * @version 1.0, Sun Feb 25 18:42:46  2001
  */
 
-public final class FFT extends AudioObject{
-	//----------------------------------------------
-	// Constructors
-	//----------------------------------------------
-	/**
-	 *
-	 */
-	public FFT(AudioObject ao){
-		super(ao, "[FFT]");
-	}
+public final class FFT extends AudioObject {
+    //----------------------------------------------
+    // Constructors
+    //----------------------------------------------
 
-	//----------------------------------------------
-	// Methods
-	//----------------------------------------------
-	/**
-	 * Process each buffer of samples in turn.
-	 */
-	public int work(float[] buffer)throws AOException{
-		int returned = this.previous[0].nextWork(buffer);
-		RealFloatFFT_Radix2 fft = null;
-		fft=new RealFloatFFT_Radix2(inst.getBufSize());
-		fft.transform(buffer);
-		return returned;
-	}
+    /**
+     *
+     */
+    public FFT(AudioObject ao) {
+        super(ao, "[FFT]");
+    }
+
+    //----------------------------------------------
+    // Methods
+    //----------------------------------------------
+
+    /**
+     * Process each buffer of samples in turn.
+     */
+    public int work(float[] buffer) throws AOException {
+        int returned = this.previous[0].nextWork(buffer);
+        RealFloatFFT_Radix2 fft = null;
+        fft = new RealFloatFFT_Radix2(inst.getBufSize());
+        fft.transform(buffer);
+        return returned;
+    }
 }

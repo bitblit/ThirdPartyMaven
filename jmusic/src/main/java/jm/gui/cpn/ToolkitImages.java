@@ -23,17 +23,15 @@
 
 package jm.gui.cpn;
 
-import java.awt.Image;
-import java.awt.Toolkit;
+import java.awt.*;
 
 /**
  * Defines images for use with {@link Stave} components loaded via an AWT
  * Toolkit.
  *
- * @see     Stave
- *
- * @author  Andrew Sorensen, Andrew Brown, Adam Kirby
+ * @author Andrew Sorensen, Andrew Brown, Adam Kirby
  * @version 0.0.1, 8th July 2001
+ * @see Stave
  */
 public class ToolkitImages implements Images {
 

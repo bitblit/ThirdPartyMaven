@@ -24,8 +24,8 @@
 package jm.gui.graph;
 
 /**
- * @author  Adam Kirby
- * @version 1.0,Sun Feb 25 18:43
+ * @author Adam Kirby
+ * @version 1.0, Sun Feb 25 18:43
  */
 public class Statistics implements Cloneable, java.io.Serializable {
     /**
@@ -44,8 +44,8 @@ public class Statistics implements Cloneable, java.io.Serializable {
      */
     public Statistics(int initialCapacity) {
         if (initialCapacity < 0) {
-            throw new IllegalArgumentException("Illegal Capacity: "+
-                                               initialCapacity);
+            throw new IllegalArgumentException("Illegal Capacity: " +
+                    initialCapacity);
         }
         this.elementData = new double[initialCapacity];
     }
@@ -73,7 +73,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
         int oldCapacity = elementData.length;
         if (minCapacity > oldCapacity) {
             double oldData[] = elementData;
-            int newCapacity = (oldCapacity * 3)/2 + 1;
+            int newCapacity = (oldCapacity * 3) / 2 + 1;
             if (newCapacity < minCapacity) {
                 newCapacity = minCapacity;
             }
@@ -121,7 +121,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
     /**
      */
     public int lastIndexOf(double value) {
-        for (int i = size-1; i >= 0; i--) {
+        for (int i = size - 1; i >= 0; i--) {
             if (value == elementData[i]) {
                 return i;
             }
@@ -132,12 +132,12 @@ public class Statistics implements Cloneable, java.io.Serializable {
     /**
      */
     public Object clone() {
-        try { 
+        try {
             Statistics stats = (Statistics) super.clone();
             stats.elementData = new double[size];
             System.arraycopy(elementData, 0, stats.elementData, 0, size);
             return stats;
-        } catch (CloneNotSupportedException e) { 
+        } catch (CloneNotSupportedException e) {
             // this shouldn't happen, since we are Cloneable
             throw new InternalError();
         }
@@ -156,7 +156,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
     public double[] toArray(double a[]) {
         if (a.length < size) {
             a = new double[size];
-        }                    
+        }
         System.arraycopy(elementData, 0, a, 0, size);
         if (a.length > size) {
             a[size] = 0;
@@ -226,11 +226,11 @@ public class Statistics implements Cloneable, java.io.Serializable {
     public void add(int index, double element) {
         if (index > size || index < 0) {
             throw new IndexOutOfBoundsException(
-                    "Index: "+index+", Size: "+size);
+                    "Index: " + index + ", Size: " + size);
         }
-        ensureCapacity(size + 1); 
+        ensureCapacity(size + 1);
         System.arraycopy(elementData, index, elementData, index + 1,
-                 size - index);
+                size - index);
         elementData[index] = element;
         size++;
         if (element > largestValue) {
@@ -245,8 +245,8 @@ public class Statistics implements Cloneable, java.io.Serializable {
         double oldValue = elementData[index];
         int numMoved = size - index - 1;
         if (numMoved > 0) {
-            System.arraycopy(elementData, index+1, elementData, index,
-                     numMoved);
+            System.arraycopy(elementData, index + 1, elementData, index,
+                    numMoved);
         }
         elementData[--size] = 0; // Let gc do its work
         return oldValue;
@@ -259,7 +259,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
         for (int i = 0; i < size; i++) {
             elementData[i] = 0;
         }
-    
+
         size = 0;
     }
 
@@ -268,10 +268,10 @@ public class Statistics implements Cloneable, java.io.Serializable {
     protected void removeRange(int fromIndex, int toIndex) {
         int numMoved = size - toIndex;
         System.arraycopy(elementData, toIndex, elementData, fromIndex,
-                             numMoved);
-    
+                numMoved);
+
         // Let gc do its work
-        int newSize = size - (toIndex-fromIndex);
+        int newSize = size - (toIndex - fromIndex);
         while (size != newSize) {
             elementData[--size] = 0;
         }
@@ -282,7 +282,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
     private void rangeCheck(int index) {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException(
-                   "Index: "+index+", Size: "+size);
+                    "Index: " + index + ", Size: " + size);
         }
     }
 
@@ -292,12 +292,12 @@ public class Statistics implements Cloneable, java.io.Serializable {
             throws java.io.IOException {
         // Write out element count, and any hidden stuff
         s.defaultWriteObject();
-    
+
         // Write out array length
         s.writeInt(elementData.length);
-    
+
         // Write out all elements in the proper order.
-        for (int i=0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             s.writeDouble(elementData[i]);
         }
     }
@@ -314,7 +314,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
         elementData = new double[arrayLength];
 
         // Read in all elements in the proper order.
-        for (int i=0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             elementData[i] = s.readDouble();
         }
     }
@@ -331,7 +331,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
             return false;
         }
 
-        Statistics stats = (Statistics) o                                    ;
+        Statistics stats = (Statistics) o;
         if (size == stats.size()) {
             for (int i = 0; i < size; i++) {
                 double s1 = get(i);
@@ -370,7 +370,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
         for (int i = 0; i <= maxIndex; i++) {
             buf.append(String.valueOf(get(i)));
             if (i < maxIndex)
-            buf.append(", ");
+                buf.append(", ");
         }
         buf.append("]");
         return buf.toString();

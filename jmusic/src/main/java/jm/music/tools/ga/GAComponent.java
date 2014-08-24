@@ -23,16 +23,15 @@
 
 package jm.music.tools.ga;
 
-import java.awt.Panel;
+import java.awt.*;
 
 /**
- * @author    Adam Kirby
- * @version   0.1.1, 11th December 2000
+ * @author Adam Kirby
+ * @version 0.1.1, 11th December 2000
  */
 public abstract class GAComponent {
-    protected Panel panel = new Panel();
-
     protected static String label = "Genetic Algorithm Component";
+    protected Panel panel = new Panel();
 
     public Panel getPanel() {
         return panel;

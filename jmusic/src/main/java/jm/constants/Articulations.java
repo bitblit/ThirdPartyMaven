@@ -22,19 +22,20 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.constants;
 
-/** An interface storing articulation constants.
-  * 
-  * @see jm.music.data.Note
-  * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
-  */
+/**
+ * An interface storing articulation constants.
+ *
+ * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
+ * @see jm.music.data.Note
+ */
 public interface Articulations {
-    
-        public static final double
-                STACCATISSIMO  = 0.25,
-                STACCATO       = 0.4,
-                MEZZO_STACCATO = 0.75,
-                LEGATO         = 0.95,
-                TENUTO         = 1.0,
-                SOSTENUTO      = 1.2;
-    
+
+    public static final double
+            STACCATISSIMO = 0.25,
+            STACCATO = 0.4,
+            MEZZO_STACCATO = 0.75,
+            LEGATO = 0.95,
+            TENUTO = 1.0,
+            SOSTENUTO = 1.2;
+
 }

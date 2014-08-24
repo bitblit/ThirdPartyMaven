@@ -23,28 +23,28 @@
 
 package jm.util;
 
-import java.awt.Button;
-import java.awt.Frame;
-import java.awt.FileDialog;
+import jm.music.data.Score;
+
+import java.awt.*;
 import java.io.File;
 import java.io.FilenameFilter;
 
-import jm.music.data.Score;
-
 /**
  * A button which allows user to import a folder of MIDI and jMusic files.
- *
+ * <p/>
  * <P>After each successful import of a Score, any registered ReadListeners
  * are notified and can update and use the score read.  The listeners are
  * guaranteed to be notified in a LILO (Last In Last Out) order.  As an example,
  * if you wanted a Score quantised and then analysed, you would the quantising
- * ReadListener first, then the analysing one. 
+ * ReadListener first, then the analysing one.
  *
  * @author Adam Kirby
- * @version 1.0,Sun Feb 25 18:43
+ * @version 1.0, Sun Feb 25 18:43
  */
 public class ReadFolderButton extends Button {
-    /** List of ReadListener's associated with this button */
+    /**
+     * List of ReadListener's associated with this button
+     */
     private ReadListenerLinkedList readListenerList;
 
     /**
@@ -59,32 +59,33 @@ public class ReadFolderButton extends Button {
         super("Read Folder");
         final FileDialog load = new FileDialog(owner,
                 "Select a file to read all Midi and JMusic within that"
-                + " file's folder", FileDialog.LOAD);
+                        + " file's folder", FileDialog.LOAD
+        );
         final FilenameFilter filter = new ReadFilenameFilter();
         load.setFilenameFilter(filter);
 
         addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                load.show();
+                              public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                  load.show();
 
-                String directoryName = load.getDirectory();
-                if (directoryName == null) {
-                    return;
-                }
-                String[] filenames = new File(directoryName).list(filter);
-                for (int i = 0; i < filenames.length; i++) {
-                    Score score = Read.midiOrJmWithAWTMessaging(directoryName,
-                                                                filenames[i],
-                                                                owner);
-                    if (score != null && readListenerList != null) {
-                        readListenerList.scoreRead(score);
-                    }
-                }
-                if (readListenerList != null) {
-                    readListenerList.finishedReading();
-                }
-            }
-        }
+                                  String directoryName = load.getDirectory();
+                                  if (directoryName == null) {
+                                      return;
+                                  }
+                                  String[] filenames = new File(directoryName).list(filter);
+                                  for (int i = 0; i < filenames.length; i++) {
+                                      Score score = Read.midiOrJmWithAWTMessaging(directoryName,
+                                              filenames[i],
+                                              owner);
+                                      if (score != null && readListenerList != null) {
+                                          readListenerList.scoreRead(score);
+                                      }
+                                  }
+                                  if (readListenerList != null) {
+                                      readListenerList.finishedReading();
+                                  }
+                              }
+                          }
         );
     }
 
@@ -92,7 +93,6 @@ public class ReadFolderButton extends Button {
      * Registers a ReadListener to recieve successful read notifications
      *
      * @param l ReadListener to add
-     *
      * @see #removeReadListener
      */
     public void addReadListener(ReadListener l) {
@@ -110,7 +110,6 @@ public class ReadFolderButton extends Button {
      * Unregisters a ReadListener from recieving read notifications
      *
      * @param l ReadListner to remove
-     *
      * @see #addReadListener
      */
     public void removeReadListener(ReadListener l) {

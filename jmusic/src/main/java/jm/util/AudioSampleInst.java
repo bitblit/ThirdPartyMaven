@@ -18,28 +18,25 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-*/ 
+*/
 package jm.util;
 
-import jm.audio.io.*;
-import jm.audio.Instrument;
-import jm.audio.synth.*;
-import jm.music.data.Note;
-import jm.audio.AudioObject;
+import jm.audio.io.SampleIn;
 
 /**
-* This instrument is used for playabck of .au files in the Play.au() method.
-* @author Andrew Brown
-*/
-public final class AudioSampleInst extends jm.audio.Instrument{
-	private String fileName;
+ * This instrument is used for playabck of .au files in the Play.au() method.
+ *
+ * @author Andrew Brown
+ */
+public final class AudioSampleInst extends jm.audio.Instrument {
+    private String fileName;
 
-	public AudioSampleInst(String fileName){
-		this.fileName = fileName;
-	}
+    public AudioSampleInst(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public void createChain(){
+    public void createChain() {
         SampleIn sin = new SampleIn(this, fileName, true, true); //, 4, 44100, 88200); // cahce and wholefile booleans
         // Envelope env = new Envelope(sin, new double[] {0.0, 0.0, 0.001, 1.0, 0.999, 1.0, 1.0, 0.0});
-	}
+    }
 }

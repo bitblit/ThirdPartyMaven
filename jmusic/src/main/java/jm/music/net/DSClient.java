@@ -24,10 +24,11 @@ package jm.music.net;
 
 /**
  * @author Andrew Sorensen
- * @version 1.0,Sun Feb 25 18:42:51  2001
+ * @version 1.0, Sun Feb 25 18:42:51  2001
  */
 
-public interface DSClient{
-	public void newObject(Object obj);
-	public void setConnection(DSClientConnector connection);
+public interface DSClient {
+    public void newObject(Object obj);
+
+    public void setConnection(DSClientConnector connection);
 }

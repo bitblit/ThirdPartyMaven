@@ -22,17 +22,18 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.constants;
 
-/** An interface storing noise constants.
-  * 
-  * @see jm.music.data.Note
-  * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
-  */
+/**
+ * An interface storing noise constants.
+ *
+ * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
+ * @see jm.music.data.Note
+ */
 public interface Noises {
-    
-        public static final int 
-                WHITE_NOISE = 0,
-                STEP_NOISE = 1,
-                SMOOTH_NOISE = 2,
-                BROWN_NOISE = 3,
-                FRACTAL_NOISE = 4;        
+
+    public static final int
+            WHITE_NOISE = 0,
+            STEP_NOISE = 1,
+            SMOOTH_NOISE = 2,
+            BROWN_NOISE = 3,
+            FRACTAL_NOISE = 4;
 }

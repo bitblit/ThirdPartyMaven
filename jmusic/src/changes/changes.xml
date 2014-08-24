@@ -1,0 +1,21 @@
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+    <properties>
+        <title>jMusic</title>
+        <author>Andrew Sorenson</author>
+    </properties>
+    <body>
+        <release version="1.6.4.1" date="2014-08-23" description="Translation bugfix">
+            <action dev="cweiss" type="add">
+                Initial translation to maven format did not have images in resources directory - fixed.
+            </action>
+        </release>
+
+        <release version="1.6.4" date="2014-02-01" description="First release">
+            <action dev="cweiss" type="update">
+                Initial conversion of jMusic source to Maven format
+            </action>
+        </release>
+    </body>
+</document>

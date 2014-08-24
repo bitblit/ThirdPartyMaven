@@ -18,25 +18,24 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-*/ 
+*/
 package jm.util;
 
-import jm.JMC;
-import jm.music.rt.RTLine;
 import jm.audio.Instrument;
 import jm.music.data.Note;
+import jm.music.rt.RTLine;
 
 public class AudioRTLine extends RTLine {
     private boolean firstTime = true;
-    
-    public AudioRTLine (String fileName) {
-            super(new Instrument[] {new AudioSampleInst(fileName)});
+
+    public AudioRTLine(String fileName) {
+        super(new Instrument[]{new AudioSampleInst(fileName)});
     }
-    
+
     public synchronized Note getNextNote() {
         // duration and pitch are disregarded by the instrument
         Note n;
-        if(firstTime) {
+        if (firstTime) {
             n = new Note(67, 1.0);
             firstTime = false;
         } else n = new Note(jm.JMC.REST, 1.0);

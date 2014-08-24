@@ -23,15 +23,11 @@
 
 package jm.gui.graph;
 
-import java.awt.Canvas;
-import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.Image;
-import java.awt.Dimension;
+import java.awt.*;
 
 /**
- * @author  Adam Kirby
- * @version 1.0,Sun Feb 25 18:43
+ * @author Adam Kirby
+ * @version 1.0, Sun Feb 25 18:43
  */
 public class LineGraphCanvas extends GraphCanvas {
     protected boolean hasMusicChanged = true;
@@ -75,17 +71,17 @@ public class LineGraphCanvas extends GraphCanvas {
 
         for (int i = 0; i < statsList.size(); i++) {
             graphics.setColor(new Color((float) Math.random(),
-                                        (float) Math.random(),
-                                        (float) Math.random()));
+                    (float) Math.random(),
+                    (float) Math.random()));
             for (int j = 1; j < statsList.get(i).size(); j++) {
                 if (statsList.get(i).largestValue()
                         != Double.POSITIVE_INFINITY) {
-                    if (i == 2) {             
+                    if (i == 2) {
                         graphics.drawLine((int) ((j - 1) * .5), (int) (statsList.get(i).get(j - 1) * 10000),
-                                          (int) (j * .5), (int) (statsList.get(i).get(j) * 10000));
+                                (int) (j * .5), (int) (statsList.get(i).get(j) * 10000));
                     } else {
                         graphics.drawLine((int) ((j - 1) * .5), (int) (statsList.get(i).get(j - 1) * 300),
-                                          (int) (j * .5), (int) (statsList.get(i).get(j) * 300));
+                                (int) (j * .5), (int) (statsList.get(i).get(j) * 300));
                     }
                 }
             }

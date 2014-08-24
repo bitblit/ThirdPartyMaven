@@ -22,58 +22,56 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.audio.synth;
 
-import java.io.IOException;
-
-import jm.audio.AudioObject;
 import jm.audio.AOException;
-import jm.music.data.Note;
+import jm.audio.AudioObject;
 
 /**
  * This class keeps a sample buffer the length of the
  * current note and feeds them to the chain in the
  * reversed order.
+ *
  * @author Andrew Sorensen
- * @version 1.0,Sun Feb 25 18:42:51  2001
+ * @version 1.0, Sun Feb 25 18:42:51  2001
  */
 
-public final class NoteBufferReversed extends AudioObject{
-	//----------------------------------------------
-	// Attributes 
-	//----------------------------------------------
-	private float[] noteBuffer;
-	private boolean flag = true;
-	private int noteBufferPosition;
+public final class NoteBufferReversed extends AudioObject {
+    //----------------------------------------------
+    // Attributes
+    //----------------------------------------------
+    private float[] noteBuffer;
+    private boolean flag = true;
+    private int noteBufferPosition;
 
-	//----------------------------------------------
-	// Constructors 
-	//----------------------------------------------
-	public NoteBufferReversed(AudioObject ao){
-		super(ao, "[Volume]");
-	}
+    //----------------------------------------------
+    // Constructors
+    //----------------------------------------------
+    public NoteBufferReversed(AudioObject ao) {
+        super(ao, "[Volume]");
+    }
 
-	//----------------------------------------------
-	// Public Methods
-	//----------------------------------------------
-	public void build(){
-		noteBuffer = new float[numOfSamples];
-		noteBufferPosition = numOfSamples;
-		this.flag = true;
-	}
-		
-	//----------------------------------------------
-	// Protected Methods
-	//----------------------------------------------
-	public int work(float[] buffer)throws AOException{
-		if(flag){
-			int returned = this.previous[0].nextWork(noteBuffer);
-			flag = false;
-		}
-		int i = 0;
-		int numof = (noteBufferPosition < buffer.length) 
-			? noteBufferPosition : buffer.length;
-		for(;i<numof;i++){
-			buffer[i] = noteBuffer[--noteBufferPosition];
-		}
-		return i;
-	}
+    //----------------------------------------------
+    // Public Methods
+    //----------------------------------------------
+    public void build() {
+        noteBuffer = new float[numOfSamples];
+        noteBufferPosition = numOfSamples;
+        this.flag = true;
+    }
+
+    //----------------------------------------------
+    // Protected Methods
+    //----------------------------------------------
+    public int work(float[] buffer) throws AOException {
+        if (flag) {
+            int returned = this.previous[0].nextWork(noteBuffer);
+            flag = false;
+        }
+        int i = 0;
+        int numof = (noteBufferPosition < buffer.length)
+                ? noteBufferPosition : buffer.length;
+        for (; i < numof; i++) {
+            buffer[i] = noteBuffer[--noteBufferPosition];
+        }
+        return i;
+    }
 }

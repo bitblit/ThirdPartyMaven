@@ -1,186 +1,175 @@
-import jm.audio.io.*;
-
-import jm.audio.synth.*;
-
-import jm.music.data.Note;
-
 import jm.audio.AudioObject;
-
+import jm.audio.io.SampleOut;
+import jm.audio.synth.*;
 
 
 /**
-
  * A basic layered synthesis instrument
-
+ *
  * @author Andrew Brown after Andrew Sorensen
-
  */
 
 
+public final class BreathyFluteInst extends jm.audio.Instrument {
 
+    //----------------------------------------------
 
+    // Attributes
 
-public final class BreathyFluteInst extends jm.audio.Instrument{
+    //----------------------------------------------
 
-	//----------------------------------------------
+    /**
+     * The points to use in the construction of Envelopes
+     */
 
-	// Attributes
+    private EnvPoint[] pointArray = new EnvPoint[10];
 
-	//----------------------------------------------
+    /**
+     * The points to use in the construction of Envelopes
+     */
 
-	/** The points to use in the construction of Envelopes */
+    private EnvPoint[] pointArray2 = new EnvPoint[10];
 
-	private EnvPoint[] pointArray = new EnvPoint[10];
+    /**
+     * The number of channels
+     */
 
-	/** The points to use in the construction of Envelopes */
+    private int channels;
 
-	private EnvPoint[] pointArray2 = new EnvPoint[10];
+    /**
+     * the sample rate passed to the instrument
+     */
 
-	/** The number of channels */
+    private int sampleRate;
 
-	private int channels;
 
-	/** the sample rate passed to the instrument */
+    //----------------------------------------------
 
-	private int sampleRate;
+    // Constructor
 
+    //----------------------------------------------
 
+    /**
+     * Basic default constructor to set an initial
+     * <p/>
+     * sampling rate.
+     *
+     * @param sampleRate
+     */
 
-	//----------------------------------------------
+    public BreathyFluteInst(int sampleRate) {
 
-	// Constructor
+        this(sampleRate, 1);
 
-	//----------------------------------------------
+    }
 
-	/**
+    /**
+     * A constructor to set an initial
+     * <p/>
+     * sampling rate and number of channels.
+     *
+     * @param sampleRate
+     */
 
-	 * Basic default constructor to set an initial 
+    public BreathyFluteInst(int sampleRate, int channels) {
 
-	 * sampling rate.
+        this.sampleRate = sampleRate;
 
-	 * @param sampleRate 
+        this.channels = channels;
 
-	 */
+        // tone env
 
-	public BreathyFluteInst(int sampleRate){
+        EnvPoint[] tempArray = {
 
-	    this(sampleRate, 1);
+                new EnvPoint((float) 0.0, (float) 0.0),
 
-	}
+                new EnvPoint((float) 0.2, (float) 1.0),
 
-	/**
+                new EnvPoint((float) 0.5, (float) 0.7),
 
-	 * A constructor to set an initial 
+                new EnvPoint((float) 0.8, (float) 0.5),
 
-	 * sampling rate and number of channels.
+                new EnvPoint((float) 1.0, (float) 0.0)
 
-	 * @param sampleRate 
+        };
 
-	 */
+        pointArray = tempArray;
 
-	public BreathyFluteInst(int sampleRate, int channels){
+        // Noise env
 
-		this.sampleRate = sampleRate;
+        EnvPoint[] tempArray2 = {
 
-		this.channels = channels;
+                new EnvPoint((float) 0.0, (float) 0.0),
 
-		// tone env
+                new EnvPoint((float) 0.05, (float) 0.7),
 
-		EnvPoint[] tempArray = {
+                new EnvPoint((float) 0.2, (float) 0.1),
 
-			new EnvPoint((float)0.0, (float)0.0),
+                new EnvPoint((float) 1.0, (float) 0.0)
 
-			new EnvPoint((float)0.2, (float)1.0),
+        };
 
-			new EnvPoint((float)0.5, (float)0.7),
+        pointArray2 = tempArray2;
 
-			new EnvPoint((float)0.8, (float)0.5),
+    }
 
-			new EnvPoint((float)1.0, (float)0.0)
 
-		};
+    //----------------------------------------------
 
-		pointArray = tempArray;
+    // Methods
 
-		// Noise env
+    //----------------------------------------------
 
-		EnvPoint[] tempArray2 = {
 
-			new EnvPoint((float)0.0, (float)0.0),
+    /**
+     * Initialisation method used to build the objects that
+     * <p/>
+     * this instrument will use
+     */
 
-			new EnvPoint((float)0.05, (float)0.7),
+    public void createChain() {
 
-			new EnvPoint((float)0.2, (float)0.1),
+        // main tone
 
-			new EnvPoint((float)1.0, (float)0.0)
+        Oscillator wt = new Oscillator(this, Oscillator.SINE_WAVE, this.sampleRate, channels);
 
-		};
+        Volume vol = new Volume(wt, (float) 1.0);
 
-		pointArray2 = tempArray2;
+        // overtone
 
-	}
+        Oscillator wt2 = new Oscillator(this, Oscillator.SINE_WAVE, this.sampleRate, channels);
 
+        wt2.setFrqRatio((float) 2.001);
 
+        Volume vol2 = new Volume(wt2, (float) 0.5);
 
-	//----------------------------------------------
+        // overtone
 
-	// Methods 
+        Oscillator wt3 = new Oscillator(this, Oscillator.SINE_WAVE, this.sampleRate, channels);
 
-	//----------------------------------------------
+        wt3.setFrqRatio((float) 4.0);
 
-	   
+        Volume vol3 = new Volume(wt3, (float) 0.1);
 
-	/**
+        // breath
 
-	 * Initialisation method used to build the objects that
+        Noise noise = new Noise(this, Noise.WHITE_NOISE, this.sampleRate);
 
-	 * this instrument will use
+        Volume vol4 = new Volume(noise, (float) 0.2);
 
-	 */
+        // all together now
 
-	public void createChain(){
+        AudioObject[] parts = {vol, vol2, vol3, vol4};
 
-                // main tone
+        Add add = new Add(parts);
 
-		Oscillator wt = new Oscillator(this, Oscillator.SINE_WAVE, this.sampleRate, channels);
+        Envelope env = new Envelope(add, pointArray);
 
-		Volume vol = new Volume(wt, (float)1.0);
+        StereoPan span = new StereoPan(env);
 
-		// overtone
+        SampleOut sout = new SampleOut(span);
 
-		Oscillator wt2 = new Oscillator(this, Oscillator.SINE_WAVE, this.sampleRate, channels);
-
-		wt2.setFrqRatio((float)2.001);
-
-		Volume vol2 = new Volume(wt2, (float)0.5);
-
-		// overtone
-
-		Oscillator wt3 = new Oscillator(this, Oscillator.SINE_WAVE, this.sampleRate, channels);
-
-		wt3.setFrqRatio((float)4.0);
-
-		Volume vol3 = new Volume(wt3, (float)0.1);
-
-		// breath
-
-		Noise noise = new Noise(this, Noise.WHITE_NOISE, this.sampleRate );
-
-		Volume vol4 = new Volume(noise, (float)0.2);
-
-		// all together now
-
-		AudioObject[] parts = {vol, vol2, vol3, vol4};
-
-		Add add = new Add(parts);
-
-		Envelope env = new Envelope(add, pointArray);
-
-		StereoPan span = new StereoPan(env);
-
-		SampleOut sout = new SampleOut(span);
-
-	}	
+    }
 
 }
 

@@ -22,21 +22,22 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.constants;
 
-/** An interface storing waveform constants.
-  * 
-  * @see jm.music.data.Note
-  * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
-  */
+/**
+ * An interface storing waveform constants.
+ *
+ * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
+ * @see jm.music.data.Note
+ */
 public interface Waveforms {
-    
-        public static final int 
-                SINE_WAVE = 0,
-                COSINE_WAVE = 1,
-                TRIANGLE_WAVE = 2,
-                SQUARE_WAVE = 3,
-                SAWTOOTH_WAVE = 4,
-                SAWDOWN_WAVE = 5,
-                SABERSAW_WAVE = 6,
-                PULSE_WAVE = 7; 
-        
+
+    public static final int
+            SINE_WAVE = 0,
+            COSINE_WAVE = 1,
+            TRIANGLE_WAVE = 2,
+            SQUARE_WAVE = 3,
+            SAWTOOTH_WAVE = 4,
+            SAWDOWN_WAVE = 5,
+            SABERSAW_WAVE = 6,
+            PULSE_WAVE = 7;
+
 }

@@ -23,13 +23,11 @@
 
 package jm.music.tools.ga;
 
-import java.util.Hashtable;
-
 import jm.music.data.Phrase;
 
 /**
- * @author    Adam Kirby
- * @version   0.1.1, 11th December 2000
+ * @author Adam Kirby
+ * @version 0.1.1, 11th December 2000
  */
 public abstract class FitnessEvaluater extends GAComponent {
     public abstract double[] evaluate(Phrase[] population);

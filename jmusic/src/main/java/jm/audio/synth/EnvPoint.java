@@ -18,31 +18,36 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-*/ 
+*/
 package jm.audio.synth;
 
 /**
  * A trivial class to act as an Envelope cooridnate
  * x is the time axis (in beats) and y is the amplitude
+ *
  * @author Andrew Sorensen
- * @version 1.0,Sun Feb 25 18:42:47  2001
+ * @version 1.0, Sun Feb 25 18:42:47  2001
  */
 
-public final class EnvPoint{
-	/** y coordinate */
-	public float y;
-	/** x coordinate */
-	public float x = (float)-1.0;
+public final class EnvPoint {
+    /**
+     * y coordinate
+     */
+    public float y;
+    /**
+     * x coordinate
+     */
+    public float x = (float) -1.0;
 
-	public int X = -1;
+    public int X = -1;
 
-	public EnvPoint(float x, float y){
-		this.y = y;
-		this.x = x;
-	}
+    public EnvPoint(float x, float y) {
+        this.y = y;
+        this.x = x;
+    }
 
-	public EnvPoint(int X, float y){
-		this.y = y;
-		this.X = X;
-	}
+    public EnvPoint(int X, float y) {
+        this.y = y;
+        this.X = X;
+    }
 }

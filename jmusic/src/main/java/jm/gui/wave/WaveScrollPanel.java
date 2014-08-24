@@ -22,29 +22,30 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.wave;
 
-import jm.audio.io.SampleIn;
-import jm.audio.Instrument;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 
 /*
  * A part of the jMusic audio wave file viewing package
  * @author Andrew Brown
  */
 public class WaveScrollPanel extends Panel implements ActionListener, AdjustmentListener {
-        private Label name, bitSize, sampleRate, channels, resLable;
-        private Button minus, plus, play, stop;
-        private WaveView viewer;
-        private WaveRuler ruler = new WaveRuler();
-        private Panel resizePanel;
-        private Scrollbar scroll = new Scrollbar(Scrollbar.HORIZONTAL);
-        private Font font = new Font("Helvetica", Font.PLAIN, 10);
-        
-	public WaveScrollPanel() {
-		setBackground(Color.lightGray);
+    private Label name, bitSize, sampleRate, channels, resLable;
+    private Button minus, plus, play, stop;
+    private WaveView viewer;
+    private WaveRuler ruler = new WaveRuler();
+    private Panel resizePanel;
+    private Scrollbar scroll = new Scrollbar(Scrollbar.HORIZONTAL);
+    private Font font = new Font("Helvetica", Font.PLAIN, 10);
+
+    public WaveScrollPanel() {
+        setBackground(Color.lightGray);
         this.setLayout(new BorderLayout());
         resizePanel = new Panel();
-        resLable = new Label("Display Resolution: 1:"+ 0);
+        resLable = new Label("Display Resolution: 1:" + 0);
         resLable.setFont(font);
         resizePanel.add(resLable);
         minus = new Button("-");
@@ -82,116 +83,116 @@ public class WaveScrollPanel extends Panel implements ActionListener, Adjustment
         //ruler
         ruler.setWaveScrollPanel(this);
         this.add(ruler, "North");
-	}
-        
-        /*
-        * Inform this object of its containing object
-        * in order to pass actions back to it.
-        * @param viewer A WaveView instance
-        */
-        public void setViewer(WaveView viewer) {
-            this.viewer = viewer;
-            setResolution(viewer.getResolution());
+    }
+
+    /*
+    * Inform this object of its containing object
+    * in order to pass actions back to it.
+    * @param viewer A WaveView instance
+    */
+    public void setViewer(WaveView viewer) {
+        this.viewer = viewer;
+        setResolution(viewer.getResolution());
+    }
+
+    /*
+    * Specify or update the scrollbar parrameters.
+    * Used when a new file is read.
+    * @param int waveSize The number of samples in a channel
+    * @param int frameWidth The width of the current display area.
+    */
+    public void setScrollbarAttributes(int waveSize, int frameWidth, int resolution) {
+        scroll.setUnitIncrement(1000);
+        scroll.setBlockIncrement(frameWidth * resolution / 2);
+        scroll.setMinimum(0);
+        scroll.setMaximum(waveSize * 2);
+        scroll.setVisibleAmount(frameWidth * resolution);
+    }
+
+    /*
+    * Resize the scroll bar thumb when display resolution varies.
+    */
+    public void setScrollbarResolution(int resolution) {
+        if (viewer != null) {
+            scroll.setVisibleAmount(viewer.getWidth() * resolution);
+            scroll.setBlockIncrement(viewer.getWidth() * resolution / 2);
+        } else {
+            scroll.setVisibleAmount(800 * 256);
+            scroll.setBlockIncrement(800 * 256 / 2);
         }
-        
-        /*
-        * Specify or update the scrollbar parrameters.
-        * Used when a new file is read.
-        * @param int waveSize The number of samples in a channel
-        * @param int frameWidth The width of the current display area.
-        */
-        public void setScrollbarAttributes(int waveSize, int frameWidth, int resolution) {
-            scroll.setUnitIncrement(1000);
-            scroll.setBlockIncrement(frameWidth * resolution / 2);
-            scroll.setMinimum(0);
-            scroll.setMaximum(waveSize * 2);
-            scroll.setVisibleAmount(frameWidth * resolution);
-        }
-        
-        /*
-        * Resize the scroll bar thumb when display resolution varies.
-        */
-        public void setScrollbarResolution(int resolution) {
-            if (viewer != null) {
-                scroll.setVisibleAmount(viewer.getWidth() * resolution);
-                scroll.setBlockIncrement(viewer.getWidth() * resolution / 2);
-            } else {
-                scroll.setVisibleAmount(800 * 256);
-                scroll.setBlockIncrement(800 * 256 / 2);
-            }
-        }
-        
-        /*
-        * Update the scroll bar thumb position.
-        * @param newValue The new scrollbar value.
-        */
-        public void setScrollbarValue(int newValue) {
-            scroll.setValue(newValue);
-        }
-        
-        /*
-        * Notify panel of a new screen resolution value.
-        */
-        public void setResolution(int res) {
-            String resStr = new String("Display Resolution = 1:"+res);
-            if(res < 1000) resStr += "  "; // spacing
-            resLable.setText(resStr);
-            ruler.setMarkerWidth(viewer.getSampleRate() / res);
-            repaint();
-        }
-        
-        /*
-        * Specify the current file name to display in the scroll panel
-        */
-        public void setFileName(String fileName) {
-            name.setText("File = " + fileName + ". ");
-            repaint();
-        }
-        
-        /*
-        * Specify the current sample bit size to display in the scroll panel
-        */
-        public void setBitSize(int bits) {
-            bitSize.setText("Bit Depth = " + bits + ". ");
-            repaint();
-        }
-        
-        /*
-        * Specify the current sample rate to display in the scroll panel
-        */
-        public void setSampleRate(int rate) {
-            sampleRate.setText("Sample Rate = " + rate + ". ");
-            repaint();
-        }
-        
-        
-        /*
-        * Specify the current number of channels to display in the scroll panel
-        */
-        public void setChannels(int chan) {
-            channels.setText("Channels = " + chan + ". ");
-            repaint();
-        }
-        
-        /*
-        * Send back the current ruler object.
-        */
-        public WaveRuler getWaveRuler() {
-            return ruler;
-        }
-        
-        /*
-        * Send back the current wave viewer instance.
-        */
-        public WaveView getWaveView() {
-            return viewer;
-        }
+    }
+
+    /*
+    * Update the scroll bar thumb position.
+    * @param newValue The new scrollbar value.
+    */
+    public void setScrollbarValue(int newValue) {
+        scroll.setValue(newValue);
+    }
+
+    /*
+    * Notify panel of a new screen resolution value.
+    */
+    public void setResolution(int res) {
+        String resStr = new String("Display Resolution = 1:" + res);
+        if (res < 1000) resStr += "  "; // spacing
+        resLable.setText(resStr);
+        ruler.setMarkerWidth(viewer.getSampleRate() / res);
+        repaint();
+    }
+
+    /*
+    * Specify the current file name to display in the scroll panel
+    */
+    public void setFileName(String fileName) {
+        name.setText("File = " + fileName + ". ");
+        repaint();
+    }
+
+    /*
+    * Specify the current sample bit size to display in the scroll panel
+    */
+    public void setBitSize(int bits) {
+        bitSize.setText("Bit Depth = " + bits + ". ");
+        repaint();
+    }
+
+    /*
+    * Specify the current sample rate to display in the scroll panel
+    */
+    public void setSampleRate(int rate) {
+        sampleRate.setText("Sample Rate = " + rate + ". ");
+        repaint();
+    }
+
+
+    /*
+    * Specify the current number of channels to display in the scroll panel
+    */
+    public void setChannels(int chan) {
+        channels.setText("Channels = " + chan + ". ");
+        repaint();
+    }
+
+    /*
+    * Send back the current ruler object.
+    */
+    public WaveRuler getWaveRuler() {
+        return ruler;
+    }
+
+    /*
+    * Send back the current wave viewer instance.
+    */
+    public WaveView getWaveView() {
+        return viewer;
+    }
 
     /**
-    * Handle button clicks.
-    */
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == minus) {
+     * Handle button clicks.
+     */
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == minus) {
             int res = viewer.getResolution();
             if (res > 0 && res <= 1024) { //4000
                 res *= 2;
@@ -200,9 +201,9 @@ public class WaveScrollPanel extends Panel implements ActionListener, Adjustment
                 plus.setEnabled(true);
                 if (res > 1024) minus.setEnabled(false); //4000
                 viewer.setResolution(res);
-            }  
+            }
         }
-        if(e.getSource() == plus) {
+        if (e.getSource() == plus) {
             int res = viewer.getResolution();
             if (res > 1) {
                 res /= 2;
@@ -211,21 +212,21 @@ public class WaveScrollPanel extends Panel implements ActionListener, Adjustment
                 minus.setEnabled(true);
                 if (res < 2) plus.setEnabled(false);
                 viewer.setResolution(res);
-            }  
+            }
         }
-        if(e.getSource() == play) {
+        if (e.getSource() == play) {
             stop.setEnabled(true);
             viewer.playFile();
         }
-        if(e.getSource() == stop) {
+        if (e.getSource() == stop) {
             viewer.pauseFile();
             stop.setEnabled(false);
         }
-	}
-         
-         
+    }
+
+
     // adjustable interface methods
-    
+
     public void adjustmentValueChanged(AdjustmentEvent e) {
         viewer.setStartPos(scroll.getValue());
         ruler.repaint();

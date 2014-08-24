@@ -21,36 +21,36 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 package jm.music.data;
 
 /**
-  * @author Adam Kirby
-  * @version $Revision: 1.1.1.1 $, $Date: 2009/05/30 07:56:42 $
-  */
- 
+ * @author Adam Kirby
+ * @version $Revision: 1.1.1.1 $, $Date: 2009/05/30 07:56:42 $
+ */
+
 public class Anchoring {
-        final Phrase anchor;
-        
-        final Alignment alignment;
-        
-        final double offset;
-    
-        Anchoring(final Phrase anchor, final Alignment alignment, 
-                  final double offset) {
-                this.anchor    = anchor;
-                this.alignment = alignment;
-                this.offset    = offset;
-        }
-        
-        public final Phrase getAnchor() {
-                return anchor;
-        }
-        
-        public final Alignment getAlignment() {
-                return alignment;
-        }
-        
-        public final double getOffset() {
-                return offset;
-        }
-    
-    
+    final Phrase anchor;
+
+    final Alignment alignment;
+
+    final double offset;
+
+    Anchoring(final Phrase anchor, final Alignment alignment,
+              final double offset) {
+        this.anchor = anchor;
+        this.alignment = alignment;
+        this.offset = offset;
+    }
+
+    public final Phrase getAnchor() {
+        return anchor;
+    }
+
+    public final Alignment getAlignment() {
+        return alignment;
+    }
+
+    public final double getOffset() {
+        return offset;
+    }
+
+
 }
-	
+

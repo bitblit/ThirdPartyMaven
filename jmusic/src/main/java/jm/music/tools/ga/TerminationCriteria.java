@@ -26,8 +26,8 @@ package jm.music.tools.ga;
 import jm.music.data.Phrase;
 
 /**
- * @author    Adam Kirby
- * @version   0.1.1, 11th December 2000
+ * @author Adam Kirby
+ * @version 0.1.1, 11th December 2000
  */
 public abstract class TerminationCriteria extends GAComponent {
     public abstract boolean isFinished(Phrase[] population);

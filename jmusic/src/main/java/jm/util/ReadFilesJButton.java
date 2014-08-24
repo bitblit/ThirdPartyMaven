@@ -23,27 +23,25 @@
 
 package jm.util;
 
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-
 import jm.music.data.Score;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * A button which allows user to select MIDI and/or jMusic files to import.
- *
+ * <p/>
  * <P>After each successful import of a Score, any registered ReadListeners
  * are notified and can update and use the score read.  The listeners are
  * guaranteed to be notified in a LILO (Last In Last Out) order.  As an example,
  * if you wanted a Score quantised and then analysed, you would the quantising
- * ReadListener first, then the analysing one. 
+ * ReadListener first, then the analysing one.
  *
  * @author Adam Kirby
- * @version 1.0,Sun Feb 25 18:35:35  2001
- *
+ * @version 1.0, Sun Feb 25 18:35:35  2001
  * @see ReadListener
  */
 public class ReadFilesJButton extends JButton {
@@ -65,43 +63,19 @@ public class ReadFilesJButton extends JButton {
      * folder of jm and/or midi files.
      */
     public static final Mode FOLDER_MODE = new Mode("Folder");
-
     /**
-     * Class defining the states of a ReadFilesJButton
-     *
-     * @see {@link ReadFilesJButton#setMode
+     * The current import mode of this button
      */
-    private static class Mode {
-        /**
-         * Unique identifier for instances of this class.
-         */
-        private final String name;
-
-        /**
-         * This constructor has the private access modifier.  Instances of this
-         * class can only be accessed through the constants defined in this
-         * class.  This ensures that no modes, other than the ones defined here,
-         * can be created.
-         *
-         * @param name  Unique identifier for the instance
-         */
-        private Mode(String name) {
-            this.name = name;
-        }
-    }
-
-    /** The current import mode of this button */
     private Mode mode;
-
-    /** List of ReadListener's associated with this button */
+    /**
+     * List of ReadListener's associated with this button
+     */
     private ReadListenerLinkedList readListenerList;
-
     /**
      * JFileChooser that generates the dialogs for selecting the music files
      * to import
      */
     private JFileChooser chooser = new JFileChooser();
-
     /**
      * Parent component for this button.  Control to this component will be
      * suspended when file chooser dialogs and error dialogs are displayed.
@@ -114,7 +88,7 @@ public class ReadFilesJButton extends JButton {
      * for a selection of files to be imported
      *
      * @param owner Component which is the owner of this button.  Access to this
-     *              Component will be suspended when the user is selecting a 
+     *              Component will be suspended when the user is selecting a
      *              music file and when error messages are displayed.
      */
     public ReadFilesJButton(final Component owner) {
@@ -124,11 +98,11 @@ public class ReadFilesJButton extends JButton {
     /**
      * Constructs a JButton for reading in music files using the specified mode
      *
-     * @param owner     Component which is the owner of this button.  Access to
-     *                  this Component will be suspended when the user is
-     *                  selecting a music file and when error messages are
-     *                  displayed.
-     * @param readMode  Mode specified the file/folder selection mode
+     * @param owner    Component which is the owner of this button.  Access to
+     *                 this Component will be suspended when the user is
+     *                 selecting a music file and when error messages are
+     *                 displayed.
+     * @param readMode Mode specified the file/folder selection mode
      */
     public ReadFilesJButton(final Component owner, final Mode mode) {
         super();
@@ -144,7 +118,7 @@ public class ReadFilesJButton extends JButton {
                         if (chooserReturnValue != chooser.APPROVE_OPTION) {
                             return;
                         }
-        
+
                         if (mode == SINGLE_FILE_MODE) {
                             processFile(chooser.getSelectedFile());
                         } else if (mode == MULTIPLE_FILES_MODE) {
@@ -163,11 +137,11 @@ public class ReadFilesJButton extends JButton {
                                         new ReadFilenameFilter());
                                 for (int i = 0; i < filenames.length; i++) {
                                     processFile(new File(file.getAbsolutePath(),
-                                                         filenames[i]));
+                                            filenames[i]));
                                 }
                             }
                         }
-                             
+
                         if (readListenerList != null) {
                             readListenerList.finishedReading();
                         }
@@ -175,7 +149,7 @@ public class ReadFilesJButton extends JButton {
                 };
                 Thread processThread = new Thread(processRun, "processThread");
                 processThread.start();
-                
+
             }
         });
     }
@@ -183,12 +157,11 @@ public class ReadFilesJButton extends JButton {
     /**
      * Attempts to convert the <CODE>file</CODE> to a score, and if successful
      * notifies any registered {@link ReadListener ReadListeners}
-     *
+     * <p/>
      * <P>The task of file reading and conversion is delegated to {@link
      * Read.midiOrJmWithSwingMessaging(File, Component)}.
      *
-     * @param file  File to convert to a score
-     *
+     * @param file File to convert to a score
      * @see #processFiles
      */
     private void processFile(final File file) {
@@ -206,8 +179,7 @@ public class ReadFilesJButton extends JButton {
      * any registered {@link ReadListener ReadListeners} after successful
      * imports.
      *
-     * @param file  File to convert to a score
-     *
+     * @param file File to convert to a score
      * @see #processFile
      */
     private void processFiles(final File[] files) {
@@ -220,10 +192,19 @@ public class ReadFilesJButton extends JButton {
     }
 
     /**
+     * Returns the current mode of this button
+     *
+     * @return the current mode of this button
+     * @see #setMode
+     */
+    public Mode getMode() {
+        return mode;
+    }
+
+    /**
      * Sets the mode of this button to <CODE>mode</CODE>
      *
-     * @param mode  Mode for this button
-     *
+     * @param mode Mode for this button
      * @see #getMode
      */
     public void setMode(Mode mode) {
@@ -241,28 +222,16 @@ public class ReadFilesJButton extends JButton {
         } else if (mode == FOLDER_MODE) {
             setText("Read Folder");
             chooser.setDialogTitle("Select a folder of MIDI or jMusic files to "
-                                   + "import");
+                    + "import");
             chooser.setMultiSelectionEnabled(false);
             chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         }
     }
 
     /**
-     * Returns the current mode of this button
-     *
-     * @return  the current mode of this button
-     *
-     * @see #setMode
-     */
-    public Mode getMode() {
-        return mode;
-    }
-
-    /**
      * Registers a ReadListener to recieve successful read notifications
      *
      * @param l ReadListener to add
-     *
      * @see #removeReadListener
      */
     public void addReadListener(ReadListener l) {
@@ -280,7 +249,6 @@ public class ReadFilesJButton extends JButton {
      * Unregisters a ReadListener from recieving read notifications
      *
      * @param l ReadListner to remove
-     *
      * @see #addReadListener
      */
     public void removeReadListener(ReadListener l) {
@@ -289,6 +257,30 @@ public class ReadFilesJButton extends JButton {
         }
         if (readListenerList.getListener() == l) {
             readListenerList = readListenerList.getNext();
+        }
+    }
+
+    /**
+     * Class defining the states of a ReadFilesJButton
+     *
+     * @see {@link ReadFilesJButton#setMode
+     */
+    private static class Mode {
+        /**
+         * Unique identifier for instances of this class.
+         */
+        private final String name;
+
+        /**
+         * This constructor has the private access modifier.  Instances of this
+         * class can only be accessed through the constants defined in this
+         * class.  This ensures that no modes, other than the ones defined here,
+         * can be created.
+         *
+         * @param name Unique identifier for the instance
+         */
+        private Mode(String name) {
+            this.name = name;
         }
     }
 }

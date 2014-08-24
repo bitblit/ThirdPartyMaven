@@ -22,20 +22,23 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.audio.io;
 
-import java.io.*;
-import jm.audio.AOException;
-
-import javax.sound.sampled.*;
-import java.io.InputStream;
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 
 /**
-* Audio file writing class for jMusic.
-* The class utilises the JavaSound file writing classes.
-* It works indepdently of the jMusic audio architecture used
-* for rendering scores, and is intended for use by simple file
-* manipulation utility programs operating asychronously (non real time).
-* @author Andrew Brown
-*/
+ * Audio file writing class for jMusic.
+ * The class utilises the JavaSound file writing classes.
+ * It works indepdently of the jMusic audio architecture used
+ * for rendering scores, and is intended for use by simple file
+ * manipulation utility programs operating asychronously (non real time).
+ *
+ * @author Andrew Brown
+ */
 
 public class AudioFileOut {
     // the name of the file to read from.
@@ -61,12 +64,12 @@ public class AudioFileOut {
     private AudioInputStream ais;
     // The float Array with the sample data in it
     private float[] sampleData;
-    
+
     public AudioFileOut(float[] sampleData, String fileName) {
         this(sampleData, fileName, 1, 44100, 16);
     }
-    
-    public AudioFileOut(float[] sampleData, String fileName, int channels, 
+
+    public AudioFileOut(float[] sampleData, String fileName, int channels,
                         int sampleRate, int sampleSizeInBits) {
         this.sampleData = sampleData;
         this.duration = sampleData.length;
@@ -92,52 +95,52 @@ public class AudioFileOut {
         this.file = new File(this.fileName);
         // convert floats to bytes
         byte[] tmp = new byte[sampleData.length * this.sampleSize];
-        for(int i=0; i<sampleData.length; i++) {
+        for (int i = 0; i < sampleData.length; i++) {
             int ival = -1;
-            switch(sampleSize) {
+            switch (sampleSize) {
                 case 1: // 8 bit
-                    tmp[i] = new Float(sampleData[i] * (float)Byte.MAX_VALUE).byteValue();
+                    tmp[i] = new Float(sampleData[i] * (float) Byte.MAX_VALUE).byteValue();
                     break;
                 case 2: // 16 bit
-                    short sval = new Float(sampleData[i] * (float)Short.MAX_VALUE).shortValue();
-                    if(bigEndian) {
-                        tmp[i*2] = (byte) ((sval & 0x0000ff00) >> 8);
-                        tmp[i*2+1] = (byte) (sval & 0x000000ff);
+                    short sval = new Float(sampleData[i] * (float) Short.MAX_VALUE).shortValue();
+                    if (bigEndian) {
+                        tmp[i * 2] = (byte) ((sval & 0x0000ff00) >> 8);
+                        tmp[i * 2 + 1] = (byte) (sval & 0x000000ff);
                     } else {
-                        tmp[i*2] = (byte) (sval & 0x000000ff);
-                        tmp[i*2+1] = (byte) ((sval & 0x0000ff00) >> 8);
+                        tmp[i * 2] = (byte) (sval & 0x000000ff);
+                        tmp[i * 2 + 1] = (byte) ((sval & 0x0000ff00) >> 8);
                     }
                     break;
                 case 3: // 24 bit
-                    ival = new Float(sampleData[i] * (float)8388608).intValue();    
-                    if(bigEndian) {
-                        tmp[i*3] = (byte) ((ival & 0x00ff0000) >> (8 * 2));
-                        tmp[i*3+1] = (byte) ((ival & 0x0000ff00) >> 8);
-                        tmp[i*3+2] = (byte) (ival & 0x000000ff);
+                    ival = new Float(sampleData[i] * (float) 8388608).intValue();
+                    if (bigEndian) {
+                        tmp[i * 3] = (byte) ((ival & 0x00ff0000) >> (8 * 2));
+                        tmp[i * 3 + 1] = (byte) ((ival & 0x0000ff00) >> 8);
+                        tmp[i * 3 + 2] = (byte) (ival & 0x000000ff);
                     } else {
-                        tmp[i*3] = (byte) (ival & 0x000000ff);
-                        tmp[i*3+1] = (byte) ((ival & 0x0000ff00) >> 8);
-                        tmp[i*3+2] = (byte) ((ival & 0x00ff0000) >> (8 * 2));
+                        tmp[i * 3] = (byte) (ival & 0x000000ff);
+                        tmp[i * 3 + 1] = (byte) ((ival & 0x0000ff00) >> 8);
+                        tmp[i * 3 + 2] = (byte) ((ival & 0x00ff0000) >> (8 * 2));
                     }
-                    break;   
+                    break;
                 case 4: // 32 bit
-                    ival = new Float(sampleData[i] * (float)Integer.MAX_VALUE).intValue();    
-                    if(bigEndian) {
-                        tmp[i*4] = (byte) ((ival & 0xff000000) >> (8 * 3));
-                        tmp[i*4+1] = (byte) ((ival & 0x00ff0000) >> (8 * 2));
-                        tmp[i*4+2] = (byte) ((ival & 0x0000ff00) >> 8);
-                        tmp[i*4+3] = (byte) (ival & 0x000000ff);
+                    ival = new Float(sampleData[i] * (float) Integer.MAX_VALUE).intValue();
+                    if (bigEndian) {
+                        tmp[i * 4] = (byte) ((ival & 0xff000000) >> (8 * 3));
+                        tmp[i * 4 + 1] = (byte) ((ival & 0x00ff0000) >> (8 * 2));
+                        tmp[i * 4 + 2] = (byte) ((ival & 0x0000ff00) >> 8);
+                        tmp[i * 4 + 3] = (byte) (ival & 0x000000ff);
                     } else {
-                        tmp[i*4] = (byte) (ival & 0x000000ff);
-                        tmp[i*4+1] = (byte) ((ival & 0x0000ff00) >> 8);
-                        tmp[i*4+2] = (byte) ((ival & 0x00ff0000) >> (8 * 2));
-                        tmp[i*4+3] = (byte) ((ival & 0xff000000) >> (8 * 3));
+                        tmp[i * 4] = (byte) (ival & 0x000000ff);
+                        tmp[i * 4 + 1] = (byte) ((ival & 0x0000ff00) >> 8);
+                        tmp[i * 4 + 2] = (byte) ((ival & 0x00ff0000) >> (8 * 2));
+                        tmp[i * 4 + 3] = (byte) ((ival & 0xff000000) >> (8 * 3));
                     }
                     break;
                 default:
                     System.err.println("jMusic AudioFileOut error: " +
-                                       sampleSizeInBits + 
-                                       " bit audio output file format not supported, sorry :(");
+                            sampleSizeInBits +
+                            " bit audio output file format not supported, sorry :(");
                     System.exit(0); // ugly but necessary.
             }
         }
@@ -147,7 +150,7 @@ public class AudioFileOut {
         AudioInputStream ais = new AudioInputStream(bis, this.format, this.duration / this.channels);
         // writing
         try {
-        AudioSystem.write(ais, fileType, file);
+            AudioSystem.write(ais, fileType, file);
         } catch (IOException ioe) {
             System.out.println("error writing audio file.");
         }

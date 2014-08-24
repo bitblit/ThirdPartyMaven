@@ -23,17 +23,17 @@
 
 package jm.gui.graph;
 
-import java.awt.ScrollPane;
+import java.awt.*;
 
 /**
- * @author  Adam Kirby
- * @version 1.0,Sun Feb 25 18:43
+ * @author Adam Kirby
+ * @version 1.0, Sun Feb 25 18:43
  */
 public class LineGraph extends ScrollPane {
     protected GraphCanvas graphCanvas;
 
     public LineGraph() {
-        this(new Statistics());        
+        this(new Statistics());
     }
 
     public LineGraph(Statistics stats) {

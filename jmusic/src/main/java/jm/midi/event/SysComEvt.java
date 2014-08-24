@@ -21,16 +21,19 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 
 package jm.midi.event;
-/**************************************************************
-Provides an interface for System Common Events.  System Common 
-events will usually be placed into an Event List in which they 
-will be classed as Event Types.  SysComEvt extends the 
-Event interface.
-@author Andrew Sorensen
-***************************************************************/
 
-public interface SysComEvt extends Event
-{
+/**
+ * ***********************************************************
+ * Provides an interface for System Common Events.  System Common
+ * events will usually be placed into an Event List in which they
+ * will be classed as Event Types.  SysComEvt extends the
+ * Event interface.
+ *
+ * @author Andrew Sorensen
+ *         *************************************************************
+ */
+
+public interface SysComEvt extends Event {
 
 }
 

@@ -22,17 +22,18 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.constants;
 
-/** An interface storing pan constants.
-  * 
-  * @see jm.music.data.Note
-  * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
-  */
+/**
+ * An interface storing pan constants.
+ *
+ * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
+ * @see jm.music.data.Note
+ */
 public interface Panning {
-    
-        public static final double
-                PAN_CENTER = 0.5,
-                PAN_CENTRE = 0.5,
-                PAN_LEFT = 0.0,
-                PAN_RIGHT = 1.0;
-    
+
+    public static final double
+            PAN_CENTER = 0.5,
+            PAN_CENTRE = 0.5,
+            PAN_LEFT = 0.0,
+            PAN_RIGHT = 1.0;
+
 }

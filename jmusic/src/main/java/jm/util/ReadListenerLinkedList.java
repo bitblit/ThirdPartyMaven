@@ -29,19 +29,23 @@ import jm.music.data.Score;
  * A singularly linked list storing ReadListeners
  *
  * @author Adam Kirby
- * @version 1.0,Sun Feb 25 18:44
+ * @version 1.0, Sun Feb 25 18:44
  */
 class ReadListenerLinkedList {
-    /** ReadListener stored at this node of the list */
+    /**
+     * ReadListener stored at this node of the list
+     */
     private ReadListener listener;
 
-    /** Reference to the next ReadListenerLinkedList in the list */
+    /**
+     * Reference to the next ReadListenerLinkedList in the list
+     */
     private ReadListenerLinkedList next;
 
     /**
      * Consturcts a new list with one node
      *
-     * @param listener  the first ReadListener in the list
+     * @param listener the first ReadListener in the list
      */
     public ReadListenerLinkedList(ReadListener listener) {
         this.listener = listener;
@@ -51,7 +55,7 @@ class ReadListenerLinkedList {
     /**
      * Returns the next ReadListenerLinkedList in the list.
      *
-     * @return  next ReadListenerLinkedList in the list
+     * @return next ReadListenerLinkedList in the list
      */
     public ReadListenerLinkedList getNext() {
         return next;
@@ -60,7 +64,7 @@ class ReadListenerLinkedList {
     /**
      * Returns the ReadListener associated with this entry in the list
      *
-     * @return  ReadListener at this node in the list
+     * @return ReadListener at this node in the list
      */
     public ReadListener getListener() {
         return listener;
@@ -83,7 +87,7 @@ class ReadListenerLinkedList {
     }
 
     /**
-     * Removes <CODE>l</CODE> from the list if found.  
+     * Removes <CODE>l</CODE> from the list if found.
      *
      * @param l ReadListener to remove from the list.
      */
@@ -98,14 +102,14 @@ class ReadListenerLinkedList {
 
     /**
      * Triggers the score read notification of all listeners in the list
-     *
+     * <p/>
      * <P>The listeners are notified according to LILO (Last In Last Out)
      * ordering.  Thus, the first in the list updates the score, then passes its
      * updated version to the next in the list, and it gets updated and passed
      * on until the last listener to be added gets the score.
      *
      * @param score Score being imported
-     * @return      Score updated by listeners
+     * @return Score updated by listeners
      */
     public Score scoreRead(Score score) {
         if (listener == null) {
@@ -117,26 +121,27 @@ class ReadListenerLinkedList {
         return next.scoreRead(listener.scoreRead(score));
     }
 
-	public void startedReading(){
-		if (listener == null) {
-			return;
-		}
-		if (next == null) {
-			listener.startedReading();
-			return;
-		}
-		listener.startedReading();
-		next.startedReading();
-	} 
+    public void startedReading() {
+        if (listener == null) {
+            return;
+        }
+        if (next == null) {
+            listener.startedReading();
+            return;
+        }
+        listener.startedReading();
+        next.startedReading();
+    }
+
     /**
      * Triggers the finished reading notification of all listeners in the list
-     *
+     * <p/>
      * <P>The listeners are notified according to LILO (Last In Last Out)
      * ordering.  That is, the first listener to added will execute, then the
      * second, and so forth until the all have.
      *
-     * @param scores    Score array being imported
-     * @return          Score array updated by listeners
+     * @param scores Score array being imported
+     * @return Score array updated by listeners
      */
     public void finishedReading() {
         if (listener == null) {

@@ -5,7 +5,7 @@
     <artifactId>jmusic</artifactId>
     <packaging>jar</packaging>
     <name>jmusic</name>
-    <version>1.6.4</version>
+    <version>1.6.4.1</version>
     <description>JMusic - Java Music Library</description>
     <url>http://explodingart.com/jmusic</url>
     <inceptionYear>1998</inceptionYear>

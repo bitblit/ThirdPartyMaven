@@ -27,51 +27,57 @@ import jm.audio.AudioObject;
 
 /**
  * @author Andrew Sorensen
- * @version 1.0,Sun Feb 25 18:42:51  2001
+ * @version 1.0, Sun Feb 25 18:42:51  2001
  */
 
-public final class Window extends AudioObject{
-	//----------------------------------------------
-	// Attributes 
-	//----------------------------------------------
-	/** algorithm to use for the window */
-	private int type;
-	/** is this window the input or output */
-	private boolean direction;
+public final class Window extends AudioObject {
+    //----------------------------------------------
+    // Attributes
+    //----------------------------------------------
+    /**
+     * algorithm to use for the window
+     */
+    private int type;
+    /**
+     * is this window the input or output
+     */
+    private boolean direction;
 
-	//----------------------------------------------
-	// Constructors 
-	//----------------------------------------------
-	/**
-	 * @param outputs the number of outputs to support.
-	 * @param ao the single AudioObject taken as input. 
-	 */
-	public Window(AudioObject ao, int type, boolean direction){
-		super(ao, "[Window]");
-		this.type = type;
-		this.direction = direction;
-	}
-	
-	//----------------------------------------------
-	// Public Methods
-	//----------------------------------------------
-		
-	//----------------------------------------------
-	// Protected Methods
-	//----------------------------------------------
-	/**
-	 */
-	public int work(float[] buffer)throws AOException{
-		int returned = this.previous[0].nextWork(buffer);
-		if(direction){
-			for(int i=0;i<returned;i++){
-				buffer[i] = buffer[i] * (float)(Math.sin(Math.PI*i/returned));
-			}
-		}else{
-			for(int i=0;i<returned;i++){
-				buffer[i] = buffer[i] / (float)(Math.sin(Math.PI*i/returned));
-			}
-		}
-		return returned;
-	}
+    //----------------------------------------------
+    // Constructors
+    //----------------------------------------------
+
+    /**
+     * @param outputs the number of outputs to support.
+     * @param ao      the single AudioObject taken as input.
+     */
+    public Window(AudioObject ao, int type, boolean direction) {
+        super(ao, "[Window]");
+        this.type = type;
+        this.direction = direction;
+    }
+
+    //----------------------------------------------
+    // Public Methods
+    //----------------------------------------------
+
+    //----------------------------------------------
+    // Protected Methods
+    //----------------------------------------------
+
+    /**
+     */
+    public int work(float[] buffer) throws AOException {
+        int returned = this.previous[0].nextWork(buffer);
+        if (direction) {
+            for (int i = 0; i < returned; i++) {
+                buffer[i] = buffer[i] * (float) (Math.sin(Math.PI * i / returned));
+            }
+        } else {
+            for (int i = 0; i < returned; i++) {
+                buffer[i] = buffer[i] / (float) (Math.sin(Math.PI * i / returned));
+            }
+        }
+        return returned;
+    }
 }

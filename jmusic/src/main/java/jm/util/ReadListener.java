@@ -30,7 +30,7 @@ import jm.music.data.Score;
  * successfully imported from a file.
  *
  * @author Adam Kirby
- * @version 1.0,Sun Feb 25 18:44
+ * @version 1.0, Sun Feb 25 18:44
  */
 public interface ReadListener {
     /**
@@ -39,19 +39,19 @@ public interface ReadListener {
      * be performed.
      *
      * @param score Score imported by the object initiating this event
-     * @return      updated score to send back to the initiating object
+     * @return updated score to send back to the initiating object
      */
     public Score scoreRead(final Score score);
 
-	public void startedReading();
+    public void startedReading();
 
     /**
      * Implementations of this method can alter all the scores imported by the
      * initiating object.  Additionally non-score related tasks can be
      * performed.
      *
-     * @param scores    all Scores imported by the object initiating this event
-     * @return          updated scores to send back to the initiating object
+     * @param scores all Scores imported by the object initiating this event
+     * @return updated scores to send back to the initiating object
      */
     public void finishedReading();
 }

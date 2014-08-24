@@ -22,56 +22,57 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.audio.synth;
 
-import java.io.IOException;
-
-import jm.audio.AudioObject;
 import jm.audio.AOException;
-import jm.music.data.Note;
+import jm.audio.AudioObject;
 
 /**
  * The <bl>Smooth</bl> Audio Object is a simple filter. Any samples
  * that pass through the <bl>Smooth</bl> Object will have their amplitudes
  * avergaed with the previous sample.
+ *
  * @author Andrew Brown
  * @version 1.0, July 2003.
  */
 
-public final class Smooth extends AudioObject{
-        private float[] prevSampleValues;
-        
-	//----------------------------------------------
-	// Constructors 
-	//----------------------------------------------
-	/**
-	* The standard Smooth constructor takes a Single
-	 * Audio Object as input.
-	 * @param ao The single AudioObject taken as input.
-	 */
-	public Smooth(AudioObject ao){
-	    super(ao, "[Smooth]");
-	}
-        
-        public void build() {
-            prevSampleValues = new float[channels];
-            for(int i=0; i<prevSampleValues.length; i++) {
-                prevSampleValues[i] = 0.0f;
+public final class Smooth extends AudioObject {
+    private float[] prevSampleValues;
+
+    //----------------------------------------------
+    // Constructors
+    //----------------------------------------------
+
+    /**
+     * The standard Smooth constructor takes a Single
+     * Audio Object as input.
+     *
+     * @param ao The single AudioObject taken as input.
+     */
+    public Smooth(AudioObject ao) {
+        super(ao, "[Smooth]");
+    }
+
+    public void build() {
+        prevSampleValues = new float[channels];
+        for (int i = 0; i < prevSampleValues.length; i++) {
+            prevSampleValues[i] = 0.0f;
+        }
+    }
+
+    //----------------------------------------------
+    // Protected Methods
+    //----------------------------------------------
+
+    /**
+     * The nextWork method for <bl>Smooth<bl> will average amplitude values.
+     */
+    public int work(float[] buffer) throws AOException {
+        int returned = this.previous[0].nextWork(buffer);
+        for (int i = 0; i < returned; i += channels) {
+            for (int j = 0; j < channels; j++) {
+                buffer[i + j] = buffer[i + j] * 0.5f + prevSampleValues[j] * 0.5f;
+                prevSampleValues[j] = buffer[i + j];
             }
         }
-		
-	//----------------------------------------------
-	// Protected Methods
-	//----------------------------------------------
-	/**
-	 * The nextWork method for <bl>Smooth<bl> will average amplitude values.
-	 */
-	public int work(float[] buffer)throws AOException{
-		int returned = this.previous[0].nextWork(buffer);
-                for(int i=0;i<returned;i+=channels){
-                    for(int j=0;j<channels;j++){
-                        buffer[i+j] = buffer[i+j] * 0.5f + prevSampleValues[j] * 0.5f;
-                        prevSampleValues[j] = buffer[i+j];
-                    }
-                }
-		return returned;
-	}
+        return returned;
+    }
 }

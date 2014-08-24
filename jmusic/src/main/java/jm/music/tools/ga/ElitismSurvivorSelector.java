@@ -26,18 +26,18 @@ package jm.music.tools.ga;
 import jm.music.data.Phrase;
 
 /**
- * @author    Adam Kirby and Andrew Brown
- * @version   0.1.1, 11th December 2000
+ * @author Adam Kirby and Andrew Brown
+ * @version 0.1.1, 11th December 2000
  */
 public class ElitismSurvivorSelector extends SurvivorSelector {
     // How many of the best population to keep
     private static final int ELITISM_CONSTANT = 2;
-    
+
     public ElitismSurvivorSelector() {
     }
 
     public Phrase[] selectSurvivors(Phrase[] population,
-            double[] fitness, Phrase children[], double[] childrensFitness) {
+                                    double[] fitness, Phrase children[], double[] childrensFitness) {
         Phrase[] returnPopulation = new Phrase[population.length];
 
         int[] eliteIndices = new int[ELITISM_CONSTANT];
@@ -60,7 +60,7 @@ public class ElitismSurvivorSelector extends SurvivorSelector {
                             flag = false;
                         }
                     }
-                    if (flag == true)  {
+                    if (flag == true) {
                         currentBestIndex = j;
                     }
                 }
@@ -68,12 +68,12 @@ public class ElitismSurvivorSelector extends SurvivorSelector {
                 isUsed[currentBestIndex] = true;
             }
         }
-        
+
         // sort phrases into return population based on fitness
         for (int i = 0; i < eliteIndices.length; i++) {
             returnPopulation[i] = population[eliteIndices[i]];
         }
-        
+
         // replace all but the best with thier children
         for (int i = 0; i < returnPopulation.length - ELITISM_CONSTANT; i++) {
             returnPopulation[i + ELITISM_CONSTANT] = children[i];

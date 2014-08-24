@@ -23,28 +23,28 @@
 
 package jm.util;
 
-import java.awt.Button;
-import java.awt.Frame;
-import java.awt.FileDialog;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 import jm.music.data.Score;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * A button which allows user to select a MIDI or jMusic file to import.
- *
+ * <p/>
  * <P>After each successful import of a Score, any registered ReadListeners
  * are notified and can update and use the score read.  The listeners are
  * guaranteed to be notified in a LILO (Last In Last Out) order.  As an example,
  * if you wanted a Score quantised and then analysed, you would the quantising
- * ReadListener first, then the analysing one. 
+ * ReadListener first, then the analysing one.
  *
  * @author Adam Kirby
- * @version 1.0,Sun Feb 25 18:43:58  2001
+ * @version 1.0, Sun Feb 25 18:43:58  2001
  */
 public class ReadFileButton extends Button {
-    /** List of ReadListener's associated with this button */
+    /**
+     * List of ReadListener's associated with this button
+     */
     private ReadListenerLinkedList readListenerList;
 
     /**
@@ -63,21 +63,21 @@ public class ReadFileButton extends Button {
         load.setFilenameFilter(new ReadFilenameFilter());
 
         addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                load.show();
+                              public void actionPerformed(ActionEvent evt) {
+                                  load.show();
 
-                Score score = Read.midiOrJmWithAWTMessaging(load.getDirectory(),
-                                                            load.getFile(),
-                                                            owner); 
-                if (score == null) {
-                    return;
-                }
-                if (readListenerList != null) {
-                    score = readListenerList.scoreRead(score);
-                    readListenerList.finishedReading();
-                }
-            }
-        }
+                                  Score score = Read.midiOrJmWithAWTMessaging(load.getDirectory(),
+                                          load.getFile(),
+                                          owner);
+                                  if (score == null) {
+                                      return;
+                                  }
+                                  if (readListenerList != null) {
+                                      score = readListenerList.scoreRead(score);
+                                      readListenerList.finishedReading();
+                                  }
+                              }
+                          }
         );
     }
 
@@ -85,7 +85,6 @@ public class ReadFileButton extends Button {
      * Registers a ReadListener to recieve successful read notifications
      *
      * @param l ReadListener to add
-     *
      * @see #removeReadListener
      */
     public void addReadListener(ReadListener l) {
@@ -103,7 +102,6 @@ public class ReadFileButton extends Button {
      * Unregisters a ReadListener from recieving read notifications
      *
      * @param l ReadListner to remove
-     *
      * @see #addReadListener
      */
     public void removeReadListener(ReadListener l) {

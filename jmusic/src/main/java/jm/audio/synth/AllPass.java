@@ -22,79 +22,79 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.audio.synth;
 
-import java.io.IOException;
-import jm.audio.AudioObject;
 import jm.audio.AOException;
-import jm.music.data.Note;
+import jm.audio.AudioObject;
 
 /**
  * AllPass filters ...
+ *
  * @author Andrew Sorensen
- * @version 1.0,Sun Feb 25 18:42:46  2001
+ * @version 1.0, Sun Feb 25 18:42:46  2001
  */
 
-public final class AllPass extends AudioObject{
-	//The gain of this comb filter 
-	private float decay;
+public final class AllPass extends AudioObject {
+    //The gain of this comb filter
+    private float decay;
 
-	//The delay (in samples) to use with this comb filter
-	private int delay;
+    //The delay (in samples) to use with this comb filter
+    private int delay;
 
-	//Number of samples to delay by
-	private float[] delayLine;
+    //Number of samples to delay by
+    private float[] delayLine;
 
-	//Delay line current index
-	private int delayIndex;
-	
-	//----------------------------------------------
-	// Constructors
-	//----------------------------------------------
-	/**
-	 * @param delay delay in milliseconds
-  	 * 
-	 */
-	public AllPass(AudioObject ao, int delay){
-		this(ao,delay,0.5);
-	}
+    //Delay line current index
+    private int delayIndex;
 
-	/**
-	 * @param delay delay in milliseconds
-	 * @param gain as a percent
-	 */
-	public AllPass(AudioObject ao, int delay, double decay){
-		super(ao, "[AllPass]");
-		this.decay = (float)decay;
-		this.delay = delay;
-	}
+    //----------------------------------------------
+    // Constructors
+    //----------------------------------------------
 
-	//----------------------------------------------
-	// Methods
-	//----------------------------------------------
-	/**
-	 * @param buffer any number of incoming samples 
-	 */
-	public int work(float[] buffer)throws AOException{
-		int returned = this.previous[0].nextWork(buffer);
-		int i=0;
-		for(;i<returned;i++){
-			buffer[i] += delayLine[delayIndex] * decay;
-			float a = buffer[i] * -decay;
-			float b = delayLine[delayIndex];
-			delayLine[delayIndex] = buffer[i];
-			buffer[i] = a+b;
-			if(delayIndex >= delayLine.length){
-				delayIndex = 0;
-			}
-		}
-		return i;	
-	}
+    /**
+     * @param delay delay in milliseconds
+     */
+    public AllPass(AudioObject ao, int delay) {
+        this(ao, delay, 0.5);
+    }
 
-	/**
-	 * 
-	 */
-	public void build(){
-		int sampleDelay = (int)((float)((float)this.delay/(float)1000) * this.sampleRate); 
-		this.delayLine = new float[sampleDelay*this.channels];
-		this.delayIndex = 0;
-	}
+    /**
+     * @param delay delay in milliseconds
+     * @param gain  as a percent
+     */
+    public AllPass(AudioObject ao, int delay, double decay) {
+        super(ao, "[AllPass]");
+        this.decay = (float) decay;
+        this.delay = delay;
+    }
+
+    //----------------------------------------------
+    // Methods
+    //----------------------------------------------
+
+    /**
+     * @param buffer any number of incoming samples
+     */
+    public int work(float[] buffer) throws AOException {
+        int returned = this.previous[0].nextWork(buffer);
+        int i = 0;
+        for (; i < returned; i++) {
+            buffer[i] += delayLine[delayIndex] * decay;
+            float a = buffer[i] * -decay;
+            float b = delayLine[delayIndex];
+            delayLine[delayIndex] = buffer[i];
+            buffer[i] = a + b;
+            if (delayIndex >= delayLine.length) {
+                delayIndex = 0;
+            }
+        }
+        return i;
+    }
+
+    /**
+     *
+     */
+    public void build() {
+        int sampleDelay = (int) ((float) ((float) this.delay / (float) 1000) * this.sampleRate);
+        this.delayLine = new float[sampleDelay * this.channels];
+        this.delayIndex = 0;
+    }
 }

@@ -18,19 +18,21 @@
 package jm.music.data;
 
 /**
-* Creates a silent object that can be added to a phrase amongst Notes.
+ * Creates a silent object that can be added to a phrase amongst Notes.
+ *
  * @author Andrew Brown, September 2003.
  */
 public class Rest extends Note {
     /**
-    * Simple constructor that creates a rest of one beat length.
+     * Simple constructor that creates a rest of one beat length.
      */
-    public Rest(){
+    public Rest() {
         this(1.0);
     }
-    
+
     /**
      * A constructor that creates a new Rest with the specified rhythm value.
+     *
      * @param rhythmValue The number of beats long this rest is.
      */
     public Rest(double rhythmValue) {

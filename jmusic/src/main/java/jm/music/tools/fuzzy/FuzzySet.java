@@ -21,53 +21,57 @@
 
 package jm.music.tools.fuzzy;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
-* This class describes a fuzzy set that contains one or more fuzzy numbers.
-* FuzzyNumber objects can be added to the set with the add method. Defuzzification
-* output uses the centriod scheme and is provided by the getOutput method.
-*
-* @author Andrew Brown, October 2003
-*/
+ * This class describes a fuzzy set that contains one or more fuzzy numbers.
+ * FuzzyNumber objects can be added to the set with the add method. Defuzzification
+ * output uses the centriod scheme and is provided by the getOutput method.
+ *
+ * @author Andrew Brown, October 2003
+ */
 public class FuzzySet {
     private Vector numberList;
     private double productSum, memberSum;
-    
+
     /**
-    * Constructs an empty fuzzy set.
-    */
+     * Constructs an empty fuzzy set.
+     */
     public FuzzySet() {
         numberList = new Vector();
     }
-    
+
     /**
-    * Add a fuzzy number object to the set.
-    * @fNumb - The fuzzy number to be added to this set.
-    */
+     * Add a fuzzy number object to the set.
+     *
+     * @fNumb - The fuzzy number to be added to this set.
+     */
     public void add(FuzzyNumber fNumb) {
         numberList.addElement(fNumb);
     }
-    
+
     /**
-    * Remove a fuzzy number object from the set.
-    * @fNumb - The fuzzy number to be removed from this set.
-    */
+     * Remove a fuzzy number object from the set.
+     *
+     * @fNumb - The fuzzy number to be removed from this set.
+     */
     public void remove(FuzzyNumber fNumb) {
         numberList.removeElement(fNumb);
     }
-    
+
     /**
-    * Computes the real-valued fuzzy centroid (centre of gravity) as a
-    * non-normalised average of the degree of membership in each fuzzy number.
-    * @param input - The number for which the fuzzy rules are to be applied.
-    */
+     * Computes the real-valued fuzzy centroid (centre of gravity) as a
+     * non-normalised average of the degree of membership in each fuzzy number.
+     *
+     * @param input - The number for which the fuzzy rules are to be applied.
+     */
     public double getOutput(double input) {
         productSum = 0.0;
         memberSum = 0.0;
         //sum the product of the fuzzy number peak and membership
-        for (Enumeration e = numberList.elements() ; e.hasMoreElements() ;) {
-            FuzzyNumber fn = (FuzzyNumber)e.nextElement();
+        for (Enumeration e = numberList.elements(); e.hasMoreElements(); ) {
+            FuzzyNumber fn = (FuzzyNumber) e.nextElement();
             productSum += fn.getPeak() * fn.getMembership(input);
             memberSum += fn.getMembership(input);
         }

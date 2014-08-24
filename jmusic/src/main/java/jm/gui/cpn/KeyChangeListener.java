@@ -26,7 +26,7 @@ package jm.gui.cpn;
  * The listener interface for receiving notification of a change of key.
  *
  * @author Adam Kirby
- * @version 1.0,Sun Feb 25 18:35:33  2001
+ * @version 1.0, Sun Feb 25 18:35:33  2001
  */
 public interface KeyChangeListener {
     /**

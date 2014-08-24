@@ -24,28 +24,26 @@
 package jm.gui.graph;
 
 /**
- * @author  Adam Kirby
- * @version 1.0,Sun Feb 25 18:43
+ * @author Adam Kirby
+ * @version 1.0, Sun Feb 25 18:43
  */
 public class StatisticsList implements Cloneable, java.io.Serializable {
     /**
      */
+    protected transient int modCount = 0;
+    /**
+     */
     private transient Statistics elementData[];
-
     /**
      */
     private int size;
 
     /**
      */
-    protected transient int modCount = 0;
-
-    /**
-     */
     public StatisticsList(int initialCapacity) {
         if (initialCapacity < 0) {
-            throw new IllegalArgumentException("Illegal Capacity: "+
-                                               initialCapacity);
+            throw new IllegalArgumentException("Illegal Capacity: " +
+                    initialCapacity);
         }
         this.elementData = new Statistics[initialCapacity];
     }
@@ -75,7 +73,7 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
         int oldCapacity = elementData.length;
         if (minCapacity > oldCapacity) {
             Statistics oldData[] = elementData;
-            int newCapacity = (oldCapacity * 3)/2 + 1;
+            int newCapacity = (oldCapacity * 3) / 2 + 1;
             if (newCapacity < minCapacity) {
                 newCapacity = minCapacity;
             }
@@ -107,9 +105,9 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
     public int indexOf(Statistics elem) {
         if (elem == null) {
             for (int i = 0; i < size; i++)
-            if (elementData[i]==null) {
-                return i;
-            }
+                if (elementData[i] == null) {
+                    return i;
+                }
         } else {
             for (int i = 0; i < size; i++) {
                 if (elem.equals(elementData[i])) {
@@ -124,13 +122,13 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
      */
     public int lastIndexOf(Statistics elem) {
         if (elem == null) {
-            for (int i = size-1; i >= 0; i--) {
-                if (elementData[i]==null) {
+            for (int i = size - 1; i >= 0; i--) {
+                if (elementData[i] == null) {
                     return i;
                 }
             }
         } else {
-            for (int i = size-1; i >= 0; i--) {
+            for (int i = size - 1; i >= 0; i--) {
                 if (elem.equals(elementData[i])) {
                     return i;
                 }
@@ -142,13 +140,13 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
     /**
      */
     public Object clone() {
-        try { 
+        try {
             StatisticsList sl = (StatisticsList) super.clone();
             sl.elementData = new Statistics[size];
             System.arraycopy(elementData, 0, sl.elementData, 0, size);
             sl.modCount = 0;
             return sl;
-        } catch (CloneNotSupportedException e) { 
+        } catch (CloneNotSupportedException e) {
             // this shouldn't happen, since we are Cloneable
             throw new InternalError();
         }
@@ -166,8 +164,8 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
      */
     public Statistics[] toArray(Statistics a[]) {
         if (a.length < size) {
-            a = (Statistics[])java.lang.reflect.Array.newInstance(
-                                a.getClass().getComponentType(), size);
+            a = (Statistics[]) java.lang.reflect.Array.newInstance(
+                    a.getClass().getComponentType(), size);
         }
         System.arraycopy(elementData, 0, a, 0, size);
         if (a.length > size) {
@@ -207,11 +205,11 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
     public void add(int index, Statistics element) {
         if (index > size || index < 0) {
             throw new IndexOutOfBoundsException(
-                    "Index: "+index+", Size: "+size);
+                    "Index: " + index + ", Size: " + size);
         }
         ensureCapacity(size + 1);  // Increments modCount!!
         System.arraycopy(elementData, index, elementData, index + 1,
-                 size - index);
+                size - index);
         elementData[index] = element;
         size++;
     }
@@ -224,8 +222,8 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
         Statistics oldValue = elementData[index];
         int numMoved = size - index - 1;
         if (numMoved > 0) {
-            System.arraycopy(elementData, index+1, elementData, index,
-                     numMoved);
+            System.arraycopy(elementData, index + 1, elementData, index,
+                    numMoved);
         }
         elementData[--size] = null; // Let gc do its work
         return oldValue;
@@ -235,12 +233,12 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
      */
     public void clear() {
         modCount++;
-    
+
         // Let gc do its work
         for (int i = 0; i < size; i++) {
             elementData[i] = null;
         }
-    
+
         size = 0;
     }
 
@@ -250,10 +248,10 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
         modCount++;
         int numMoved = size - toIndex;
         System.arraycopy(elementData, toIndex, elementData, fromIndex,
-                             numMoved);
-    
+                numMoved);
+
         // Let gc do its work
-        int newSize = size - (toIndex-fromIndex);
+        int newSize = size - (toIndex - fromIndex);
         while (size != newSize) {
             elementData[--size] = null;
         }
@@ -264,7 +262,7 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
     private void rangeCheck(int index) {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException(
-                   "Index: "+index+", Size: "+size);
+                    "Index: " + index + ", Size: " + size);
         }
     }
 
@@ -274,12 +272,12 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
             throws java.io.IOException {
         // Write out element count, and any hidden stuff
         s.defaultWriteObject();
-    
+
         // Write out array length
         s.writeInt(elementData.length);
-    
+
         // Write out all elements in the proper order.
-        for (int i=0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             s.writeObject(elementData[i]);
         }
     }
@@ -296,7 +294,7 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
         elementData = new Statistics[arrayLength];
 
         // Read in all elements in the proper order.
-        for (int i=0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             elementData[i] = (Statistics) s.readObject();
         }
     }
@@ -313,7 +311,7 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
             return false;
         }
 
-        StatisticsList sl = (StatisticsList) o                                    ;
+        StatisticsList sl = (StatisticsList) o;
         if (size == sl.size()) {
             for (int i = 0; i < size; i++) {
                 Statistics s1 = get(i);
@@ -331,7 +329,7 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
      */
     public int hashCode() {
         int hashCode = 1;
-        for (int i = 0; i < size; i++) { 
+        for (int i = 0; i < size; i++) {
             Statistics stats = get(i);
             hashCode = 31 * hashCode + (stats == null ? 0 : stats.hashCode());
         }
@@ -372,7 +370,7 @@ public class StatisticsList implements Cloneable, java.io.Serializable {
         for (int i = 0; i <= maxIndex; i++) {
             buf.append(String.valueOf(get(i)));
             if (i < maxIndex)
-            buf.append(", ");
+                buf.append(", ");
         }
         buf.append("]");
         return buf.toString();
